@@ -38,6 +38,8 @@ dependencies:
 
   equatable: ^2.0.2
   intl: ^0.17.0
+  html: ^0.15.0
+  http: ^0.13.3
 
 dev_dependencies:
   flutter_test:

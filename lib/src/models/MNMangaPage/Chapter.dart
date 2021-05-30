@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:intl/intl.dart';
+import 'package:artifactproject/src/utils/FormatUtils.dart';
 
 class Chapter extends Equatable {
   final String title, href;
@@ -12,12 +12,12 @@ class Chapter extends Equatable {
       String title, String uploaded, String view, String href) {
     return Chapter(
       title,
-      DateFormat("MMM dd,yyyy hh:mm").parse(uploaded),
-      int.parse(view.replaceAll(",", "")),
+      FormatUtils.formatDate(uploaded),
+      FormatUtils.formatView(view),
       href,
     );
   }
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [title, href, uploaded, view];
 }
