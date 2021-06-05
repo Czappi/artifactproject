@@ -1,4 +1,4 @@
-import 'package:artifactproject/src/models/MNMangaListPage/LatestChapter.dart';
+import 'package:artifactproject/src/models/MNMangaListPage/Chapter.dart';
 import 'package:equatable/equatable.dart';
 
 class MLElement extends Equatable {
@@ -6,7 +6,7 @@ class MLElement extends Equatable {
   final DateTime updated;
   final double ratingAverage;
   final int views;
-  final LatestChapter latestChapter;
+  final Chapter latestChapter;
 
   const MLElement({
     required this.title,

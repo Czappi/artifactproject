@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:artifactproject/src/api/ApiResponse.dart';
@@ -5,17 +6,19 @@ import 'package:http/http.dart';
 
 class ApiClient {
   final Client _client = Client();
+  Cookie ciSession = Cookie('ciSession', '');
 
-  Future<Cookie?> post(String url, Cookie cookie) async {
-    var response = await _client.get(Uri.parse(url),
-        headers: {HttpHeaders.cookieHeader: _cookieToHeader(cookie)});
+  Future<ApiResponse> post(String url,
+      {String? body, Encoding? encoding}) async {
+    var response = await _client.post(
+      Uri.parse(url),
+      headers: {HttpHeaders.cookieHeader: _cookieToHeader(ciSession)},
+      body: body,
+      encoding: encoding,
+    );
 
-    Cookie ciSession = cookie;
-    if (response.headers.containsKey("set-cookie")) {
-      ciSession = Cookie.fromSetCookieValue(response.headers["set-cookie"]!);
-    }
-
-    return ciSession;
+    var isUpdated = updateSession(response);
+    return ApiResponse(ciSession, isUpdated, response.body);
   }
 
   Future<ApiResponse> get(String url,
@@ -25,23 +28,20 @@ class ApiClient {
             ? {HttpHeaders.cookieHeader: _cookieToHeader(cookie)}
             : {});
 
-    Cookie? ciSession = cookie;
-    if (response.headers.containsKey("set-cookie")) {
-      ciSession = Cookie.fromSetCookieValue(response.headers["set-cookie"]!);
-    }
-
-    return ApiResponse(ciSession, response.body);
-  }
-
-  Future<String?> getLocation(String url, Cookie cookie,
-      {String? referrer}) async {
-    var response = await _client.get(Uri.parse(url),
-        headers: {HttpHeaders.cookieHeader: _cookieToHeader(cookie)});
-
-    return response.headers["location"];
+    var isUpdated = updateSession(response);
+    return ApiResponse(ciSession, isUpdated, response.body);
   }
 
   String _cookieToHeader(Cookie cookie) {
     return "${cookie.name}=${cookie.value}";
+  }
+
+  bool updateSession(Response response) {
+    if (response.headers.containsKey("set-cookie")) {
+      ciSession = Cookie.fromSetCookieValue(response.headers["set-cookie"]!);
+      return true;
+    } else {
+      return false;
+    }
   }
 }

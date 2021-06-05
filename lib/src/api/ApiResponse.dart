@@ -4,10 +4,11 @@ import 'package:equatable/equatable.dart';
 
 class ApiResponse extends Equatable {
   final Cookie? ciSession;
-  final String document;
+  final bool isCiSessionUpdated;
+  final String body;
 
-  const ApiResponse(this.ciSession, this.document);
+  const ApiResponse(this.ciSession, this.isCiSessionUpdated, this.body);
 
   @override
-  List<Object?> get props => [ciSession, document];
+  List<Object?> get props => [ciSession, body];
 }

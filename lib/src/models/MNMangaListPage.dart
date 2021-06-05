@@ -1,2 +1,2 @@
 export 'MNMangaListPage/MangaListElement.dart';
-export 'MNMangaListPage/LatestChapter.dart';
+export 'MNMangaListPage/Chapter.dart';

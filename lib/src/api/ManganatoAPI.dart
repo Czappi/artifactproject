@@ -1,24 +1,36 @@
-import 'dart:io';
-
 import 'package:artifactproject/src/api/ApiClient.dart';
+import 'package:artifactproject/src/api/LoginData.dart';
 import 'package:artifactproject/src/models/MNChapterPage.dart' as mn_chapter;
-import 'package:artifactproject/src/utils/FormatUtils.dart';
+import 'package:artifactproject/src/models/MNLogin.dart' as mn_login;
 import 'package:artifactproject/src/utils/Enums.dart';
 import 'package:flutter/foundation.dart';
 import 'package:artifactproject/src/models/MNMangaPage.dart' as mn_manga;
 import 'package:artifactproject/src/models/MNMangaListPage.dart'
     as mn_mangalist;
-import 'package:html/parser.dart';
+
+import 'package:artifactproject/src/api/parse.dart' as parse;
 
 class ManganatoAPI {
+  static const String loginHandle = "https://user.manganelo.com/login_handle";
+  static const String homeref =
+      "https://user.manganelo.com/?l=manganato&re_l=login";
+  static const String loginPageLink = "https://user.manganelo.com/login";
+  static const String addBookmarkLink = "https://manganelo.com/setbookmark";
+  static const String removeBookmarkLink =
+      "https://manganato.com/removebookmark";
+  static const String rateMangaLink = "https://manganelo.com/story_vote";
+  static const String bookmarkPageLink = "https://manganato.com/bookmark";
   final ApiClient apiClient = ApiClient();
 
-  Future<mn_manga.Manga> mangaPage(String url, Cookie ciSession) async {
-    var response = await apiClient.get(url, cookie: ciSession);
+  String username = "";
+  LoginData? loginData;
+
+  Future<mn_manga.Manga> mangaPage(String url) async {
+    var response = await apiClient.get(url);
 
     return compute(
-      _parseMangaPage,
-      {"responseBody": response.document, "href": url},
+      parse.parseMangaPage,
+      {"responseBody": response.body, "href": url},
     );
   }
 
@@ -26,8 +38,8 @@ class ManganatoAPI {
     var response = await apiClient.get(url);
 
     return compute(
-      _parseChapterPage,
-      {"responseBody": response.document, "href": url},
+      parse.parseChapterPage,
+      {"responseBody": response.body, "href": url},
     );
   }
 
@@ -35,8 +47,8 @@ class ManganatoAPI {
     var response = await apiClient.get(url);
 
     return compute(
-      _parseMangaListPage,
-      response.document,
+      parse.parseMangaListPage,
+      response.body,
     );
   }
 
@@ -71,7 +83,7 @@ class ManganatoAPI {
       case SearchOrderBy.az:
         url + "&orby=az";
         break;
-      case SearchOrderBy.newM:
+      case SearchOrderBy.newest:
         url + "&orby=newest";
         break;
       case SearchOrderBy.topview:
@@ -118,262 +130,121 @@ class ManganatoAPI {
 
     return await mangaListPage(url);
   }
-}
 
-mn_chapter.Chapter _parseChapterPage(Map<String, String> map) {
-  var document = parse(map["responseBody"]);
+  /// returns the captcha picture's url
+  /// and update the ciSession
+  Future<mn_login.LoginPage?> loginPage() async {
+    var response = await apiClient.get(loginPageLink);
 
-  // imageUrls
-  var imageContainer = document.querySelector("div.container-chapter-reader")!;
-  var imageElements = imageContainer.children;
-  var imageUrls = imageElements.map((e) => e.attributes["src"]!).toList();
+    return await compute(parse.parseLoginPage, response.body);
+  }
 
-  // imageServers
-  var currentImageServerElement =
-      document.querySelector("a.server-image-btn.isactive")!;
-  var otherImageServerElement =
-      document.querySelector("a.server-image-btn.a-h")!;
-  var currentImageServer =
-      mn_chapter.ImageServer(currentImageServerElement.text);
-  var otherImageServer = mn_chapter.ImageServer(otherImageServerElement.text,
-      url: otherImageServerElement.attributes["data-l"]);
+  Future<bool> login(String username, String password, String captcha,
+      String firstRedirectUrl) async {
+    await apiClient.post(
+      loginHandle + "?user=$username&pass=$password&captchar=$captcha",
+    );
 
-  // chapterList
-  // indexes
-  var chapterListIndexElements =
-      document.querySelector("select.navi-change-chapter")!.children;
-  var chapterListIndexes =
-      chapterListIndexElements.map((e) => e.attributes["data-c"]!).toList();
-  // baseurl
-  var chapterListBaseUrlElementText = document
-      .querySelectorAll("script")
-      .firstWhere(
-          (element) => element.text.contains("\$navi_change_chapter_address"))
-      .text;
-  var chapterListBaseUrl = RegExp(r"\$navi_change_chapter_address = (.*?);")
-      .firstMatch(chapterListBaseUrlElementText)!
-      .group(1)!
-      .replaceAll(RegExp(r"['\+ ]"), "");
-  var chapterList =
-      mn_chapter.ChapterList(chapterListBaseUrl, chapterListIndexes);
+    // view-source:https://user.manganelo.com/?l=manganato&re_l=login
+    // need to pass login data before go to this page
+    var firstRedirectResponse = await apiClient.get(firstRedirectUrl);
+    var secondRedirect = await compute(
+        parse.parseLoginFirstRedirect, firstRedirectResponse.body);
 
-  // title
-  var title = document
-      .querySelector("div.panel-chapter-info-bot > h2")!
-      .text
-      .replaceAll(" Summary", "");
+    // view-source:https://manganato.com/login_al?u_t=bG9jYWw%3D&u_i={userid}&u_u={username}&u_a=LTE%3D&u_r=login_readmanganato_to_manganato
+    if (secondRedirect != null) {
+      var lastRedirect = await apiClient.get(secondRedirect);
 
-  // next/prev href
-  var nextHref = document
-      .querySelector("a.navi-change-chapter-btn-next.a-h")!
-      .attributes["href"]!;
-  var prevHref = document
-      .querySelector("a.navi-change-chapter-btn-prev.a-h")!
-      .attributes["href"]!;
+      if (lastRedirect.isCiSessionUpdated) {
+        var encryptedId =
+            RegExp(r'u_i=([a-zA-Z0-9]+)').firstMatch(secondRedirect)!.group(1)!;
+        var encryptedUsername =
+            RegExp(r'u_u=([a-zA-Z0-9]+)').firstMatch(secondRedirect)!.group(1)!;
+        loginData = LoginData(encryptedId, encryptedUsername);
 
-  return mn_chapter.Chapter(
-      title: title,
-      href: map["href"]!,
-      nextHref: nextHref,
-      prevHref: prevHref,
-      imageUrls: imageUrls,
-      currentImageServer: currentImageServer,
-      otherImageServer: otherImageServer,
-      chapterList: chapterList);
-}
-
-mn_manga.Manga _parseMangaPage(Map<String, String> map) {
-  var document = parse(map["responseBody"]);
-
-  // image
-  String imageUrl =
-      document.querySelector("span.info-image > img")!.attributes["src"]!;
-
-  // title
-  String title = document.querySelector("div.story-info-right > h1")!.text;
-
-  // table
-  var tableElements =
-      document.querySelector("table.variations-tableInfo > tbody")!.children;
-
-  String? alternativeTitle;
-  mn_manga.Author? author;
-  MangaStatus? status;
-  List<mn_manga.Genre>? genres = [];
-
-  for (var e in tableElements) {
-    if (e.querySelector("i.info-alternative") != null) {
-      alternativeTitle = e.querySelector("td.table-value > h2")!.text;
-    }
-    if (e.querySelector("i.info-author") != null) {
-      var authorElement = e.querySelector("td.table-value > a.a-h")!;
-      author = mn_manga.Author(
-          authorElement.text, authorElement.attributes["href"]!);
-    }
-    if (e.querySelector("i.info-status") != null) {
-      status = (e.querySelector("td.table-value")!.text == "Completed")
-          ? MangaStatus.completed
-          : MangaStatus.ongoing;
-    }
-    if (e.querySelector("i.info-genres") != null) {
-      var genreElements = e.querySelectorAll("td.table-value > a.a-h");
-      for (var element in genreElements) {
-        var parsedGenre = mn_manga.Genre.fromLink(element.attributes["href"]!);
-
-        if (parsedGenre != null) {
-          genres.add(parsedGenre);
-        } else {
-          String parsedId = RegExp(r'[0-9]+')
-              .firstMatch("https://manganelo.com/genre-29")!
-              .group(0)!;
-          genres.add(mn_manga.Genre(element.text, parsedId));
-        }
+        this.username = username;
+        return true;
       }
+    }
+
+    // view-source:https://readmanganato.com/login_al?u_t=bG9jYWw=&u_i={userid}&u_u={username}&u_a=LTE=&u_r=manganato_home
+    // this not needed, the ciSession reset here goes to the oblivion xd (in my case atleast)
+
+    return false;
+  }
+
+  Future<List<mn_login.Bookmark>> getBookmarks() async {
+    List<mn_login.Bookmark> bookmarks = [];
+    var nextPage = 1;
+    var lastPage = 1;
+
+    var firstResponse =
+        await apiClient.get(bookmarkPageLink + "?page=$nextPage");
+    var firstbookmarkpage =
+        await compute(parse.parseBookmarkPage, firstResponse.body);
+
+    bookmarks.addAll(firstbookmarkpage.bookmarks);
+
+    nextPage = firstbookmarkpage.currentPage + 1;
+    lastPage = firstbookmarkpage.lastPage;
+
+    for (nextPage; nextPage <= lastPage; nextPage++) {
+      var response = await apiClient.get(bookmarkPageLink + "?page=$nextPage");
+      var bookmarkpage = await compute(parse.parseBookmarkPage, response.body);
+
+      lastPage = bookmarkpage.lastPage;
+
+      bookmarks.addAll(bookmarkpage.bookmarks);
+    }
+
+    return bookmarks;
+  }
+
+  Future<bool> addBookmark(String storyId) async {
+    var response =
+        await apiClient.post(addBookmarkLink, body: "storyid=$storyId");
+
+    if (response.body == 'okie') {
+      return true;
+    } else {
+      return false;
     }
   }
 
-  // info
-  var infoContainer = document
-      .querySelectorAll("div.story-info-right-extent > p")
-      .where((element) => element.querySelector("span.stre-value") != null);
+  Future<bool> removeBookmark(String bookmarkId) async {
+    var response = await apiClient.post(removeBookmarkLink,
+        body: "bookmarkid=$bookmarkId");
 
-  // updated
-  DateTime updated = FormatUtils.formatDate(infoContainer
-      .firstWhere((element) => element.querySelector("i.info-time") != null)
-      .querySelector("span.stre-value")!
-      .text
-      .replaceFirst(" - ", " "));
+    if (response.body == 'okie') {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-  // view
-  int views = FormatUtils.formatView(infoContainer
-      .firstWhere((element) => element.querySelector("i.info-view") != null)
-      .querySelector("span.stre-value")!
-      .text);
+  Future<bool> rateManga(int rating, String storyId) async {
+    int _rating = rating.clamp(1, 5);
+    var response = await apiClient.post(rateMangaLink,
+        body: "rate=$_rating&idmanga=$storyId");
+    if (response.body == 'ok') {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-  // rating
+  /// both id and username base64 encrypted
+  Future<bool> loginWithId(String id, String username) async {
+    String url =
+        "https://manganato.com/login_al?u_t=bG9jYWw=&u_i=$id&u_u=$username&u_a=LTE=&u_r=manganato_home";
 
-  double best = double.tryParse(document
-          .querySelector(
-              'em#rate_row_cmd > em > em > em > em[property="v:best"]')!
-          .text) ??
-      5;
-  double average = (double.tryParse(document
-              .querySelector(
-                  'em#rate_row_cmd > em > em > em > em[property="v:average"]')!
-              .text) ??
-          0)
-      .clamp(0, best);
-  int votes = int.tryParse(document
-          .querySelector('em#rate_row_cmd > em > em[property="v:votes"]')!
-          .text) ??
-      0;
-  var rating = mn_manga.Rating(average, best, votes);
+    var lastRedirect = await apiClient.get(url);
 
-  // postId
-  var postIdElementText = document
-      .querySelectorAll('script[type="application/javascript"]')
-      .firstWhere((element) => element.text.contains("\$postid"))
-      .text;
-  String postId =
-      RegExp(r"\$postid = (.*?);").firstMatch(postIdElementText)!.group(1)!;
-
-  // description
-  String description = document
-      .querySelector(
-          "div#panel-story-info-description.panel-story-info-description")!
-      .text
-      .replaceAll("Description :\n", "");
-
-  // chapters
-  var chapterElements =
-      document.querySelector("ul.row-content-chapter")!.children;
-  List<mn_manga.Chapter> chapters = chapterElements.map((e) {
-    var chaptername = e.querySelector("a.chapter-name")!;
-    return mn_manga.Chapter.fromStrings(
-        chaptername.text,
-        e.querySelector("span.chapter-time")!.attributes["title"]!,
-        e.querySelector("span.chapter-view")!.text,
-        chaptername.attributes["href"]!);
-  }).toList();
-
-  return mn_manga.Manga(
-    title: title,
-    href: map["href"]!,
-    img: imageUrl,
-    alternativeTitle: alternativeTitle ?? "",
-    author: author ?? const mn_manga.Author("", ""),
-    status: status ?? MangaStatus.unknown,
-    genres: genres,
-    updated: updated,
-    view: views,
-    rating: rating,
-    postId: postId,
-    description: description,
-    chapters: chapters,
-  );
-}
-
-List<mn_mangalist.MLElement> _parseMangaListPage(String responseBody) {
-  var document = parse(responseBody);
-
-  // elementlist
-  var elementlist = document
-      .querySelectorAll("div.panel-content-genres > div.content-genres-item");
-
-  // element
-  return elementlist.map((e) {
-    var aimg = e.querySelector("a.genres-item-img")!;
-    var divinfo = e.querySelector("div.genres-item-info")!;
-
-    // title
-    String title = aimg.attributes["title"]!;
-
-    // url
-    String url = aimg.attributes["href"]!;
-
-    // imgUrl
-    String imgUrl = aimg.querySelector("img.img-loading")!.attributes["src"]!;
-
-    // ratingAverage
-    double ratingAverage = double.tryParse(
-          aimg.querySelector("em.genres-item-rate")!.text,
-        ) ??
-        0.0;
-
-    // latestChapter
-    var alchap = divinfo.querySelector("a.genres-item-chap")!;
-    String lchapTitle = alchap.text;
-    String lchapHref = alchap.attributes["href"]!;
-
-    mn_mangalist.LatestChapter latestChapter =
-        mn_mangalist.LatestChapter(lchapTitle, lchapHref);
-
-    // author
-    String author = divinfo.querySelector("span.genres-item-author")!.text;
-
-    // descriptionPiece
-    String descriptionPiece = divinfo
-        .querySelector("div.genres-item-description")!
-        .text
-        .replaceFirst("\n", "");
-
-    // updated
-    DateTime updated = FormatUtils.formatMLDate(
-        divinfo.querySelector("span.genres-item-time")!.text);
-
-    // views
-    int views = FormatUtils.formatView(
-        divinfo.querySelector("span.genres-item-view")!.text);
-
-    return mn_mangalist.MLElement(
-        title: title,
-        author: author,
-        imgUrl: imgUrl,
-        url: url,
-        descriptionPiece: descriptionPiece,
-        updated: updated,
-        ratingAverage: ratingAverage,
-        views: views,
-        latestChapter: latestChapter);
-  }).toList();
+    if (lastRedirect.isCiSessionUpdated) {
+      this.username = username;
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
