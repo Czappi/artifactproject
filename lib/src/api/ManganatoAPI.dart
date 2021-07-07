@@ -250,4 +250,25 @@ class ManganatoAPI {
       return false;
     }
   }
+
+  // specified
+  static const genreallPage = "https://manganato.com/genre-all/";
+
+  Future<List<mn_mangalist.MLElement>> latestMangaPage(int page) async {
+    return await mangaListPage(
+      genreallPage + page.toString(),
+    );
+  }
+
+  Future<List<mn_mangalist.MLElement>> hotMangaPage(int page) async {
+    return await mangaListPage(
+      genreallPage + page.toString() + "?type=topview",
+    );
+  }
+
+  Future<List<mn_mangalist.MLElement>> newestMangaPage(int page) async {
+    return await mangaListPage(
+      genreallPage + page.toString() + "?type=newest",
+    );
+  }
 }
