@@ -2,6 +2,7 @@ import 'package:artifactproject/src/translations/en_US.dart';
 import 'package:get/get.dart';
 
 class ArtifactTranslations extends Translations {
+  @override
   Map<String, Map<String, String>> get keys {
     Map<String, Map<String, String>> langs = {};
 
