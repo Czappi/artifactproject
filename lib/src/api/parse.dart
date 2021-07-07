@@ -1,3 +1,4 @@
+import 'package:artifactproject/src/models/MLPage.dart';
 import 'package:artifactproject/src/models/MNMangaPage.dart' as mn_manga;
 import 'package:artifactproject/src/models/MNChapterPage.dart' as mn_chapter;
 import 'package:artifactproject/src/models/MNMangaListPage.dart'
@@ -206,69 +207,83 @@ mn_manga.Manga parseMangaPage(Map<String, String> map) {
   );
 }
 
-List<mn_mangalist.MLElement> parseMangaListPage(String responseBody) {
-  var document = parse(responseBody);
+MLPage parseMangaListPage(String responseBody) {
+  try {
+    var document = parse(responseBody);
 
-  // elementlist
-  var elementlist = document
-      .querySelectorAll("div.panel-content-genres > div.content-genres-item");
+    // elementlist
+    var elementlist = document
+        .querySelectorAll("div.panel-content-genres > div.content-genres-item");
 
-  // element
-  return elementlist.map((e) {
-    var aimg = e.querySelector("a.genres-item-img")!;
-    var divinfo = e.querySelector("div.genres-item-info")!;
+    // element
+    var elements = elementlist.map((e) {
+      var aimg = e.querySelector("a.genres-item-img")!;
+      var divinfo = e.querySelector("div.genres-item-info")!;
 
-    // title
-    String title = aimg.attributes["title"]!;
+      // title
+      String title = aimg.attributes["title"]!;
 
-    // url
-    String url = aimg.attributes["href"]!;
+      // url
+      String url = aimg.attributes["href"]!;
 
-    // imgUrl
-    String imgUrl = aimg.querySelector("img.img-loading")!.attributes["src"]!;
+      // imgUrl
+      String imgUrl = aimg.querySelector("img.img-loading")!.attributes["src"]!;
 
-    // ratingAverage
-    double ratingAverage = double.tryParse(
-          aimg.querySelector("em.genres-item-rate")!.text,
-        ) ??
-        0.0;
+      // ratingAverage
+      double ratingAverage = double.tryParse(
+            aimg.querySelector("em.genres-item-rate")!.text,
+          ) ??
+          0.0;
 
-    // latestChapter
-    var alchap = divinfo.querySelector("a.genres-item-chap")!;
-    String lchapTitle = alchap.text;
-    String lchapHref = alchap.attributes["href"]!;
+      // latestChapter
+      var alchap = divinfo.querySelector("a.genres-item-chap")!;
+      String lchapTitle = alchap.text;
+      String lchapHref = alchap.attributes["href"]!;
 
-    mn_mangalist.Chapter latestChapter =
-        mn_mangalist.Chapter(lchapTitle, lchapHref);
+      mn_mangalist.Chapter latestChapter =
+          mn_mangalist.Chapter(lchapTitle, lchapHref);
 
-    // author
-    String author = divinfo.querySelector("span.genres-item-author")!.text;
+      // author
+      String author = divinfo.querySelector("span.genres-item-author")!.text;
 
-    // descriptionPiece
-    String descriptionPiece = divinfo
-        .querySelector("div.genres-item-description")!
-        .text
-        .replaceFirst("\n", "");
+      // descriptionPiece
+      String descriptionPiece = divinfo
+          .querySelector("div.genres-item-description")!
+          .text
+          .replaceFirst("\n", "");
 
-    // updated
-    DateTime updated = FormatUtils.formatMLDate(
-        divinfo.querySelector("span.genres-item-time")!.text);
+      // updated
+      DateTime updated = FormatUtils.formatMLDate(
+          divinfo.querySelector("span.genres-item-time")!.text);
 
-    // views
-    int views = FormatUtils.formatView(
-        divinfo.querySelector("span.genres-item-view")!.text);
+      // views
+      int views = FormatUtils.formatView(
+          divinfo.querySelector("span.genres-item-view")!.text);
 
-    return mn_mangalist.MLElement(
-        title: title,
-        author: author,
-        imgUrl: imgUrl,
-        url: url,
-        descriptionPiece: descriptionPiece,
-        updated: updated,
-        ratingAverage: ratingAverage,
-        views: views,
-        latestChapter: latestChapter);
-  }).toList();
+      return mn_mangalist.MLElement(
+          title: title,
+          author: author,
+          imgUrl: imgUrl,
+          url: url,
+          descriptionPiece: descriptionPiece,
+          updated: updated,
+          ratingAverage: ratingAverage,
+          views: views,
+          latestChapter: latestChapter);
+    }).toList();
+
+    var lastPageElement = document
+        .querySelector("div.panel-page-number > div.group-page > a.page-last");
+
+    var match = RegExp(r"([0-9]+)").firstMatch(lastPageElement!.text)!.group(1);
+
+    if (match != null) {
+      return MLPage(elements, int.parse(match));
+    }
+    return MLPage(elements, 0);
+  } catch (e) {
+    return const MLPage([], 0);
+  }
 }
 
 mn_login.LoginPage parseLoginPage(String body) {

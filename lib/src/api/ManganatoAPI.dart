@@ -1,5 +1,6 @@
 import 'package:artifactproject/src/api/ApiClient.dart';
 import 'package:artifactproject/src/api/LoginData.dart';
+import 'package:artifactproject/src/models/MLPage.dart';
 import 'package:artifactproject/src/models/MNChapterPage.dart' as mn_chapter;
 import 'package:artifactproject/src/models/MNLogin.dart' as mn_login;
 import 'package:artifactproject/src/utils/Enums.dart';
@@ -43,7 +44,7 @@ class ManganatoAPI {
     );
   }
 
-  Future<List<mn_mangalist.MLElement>> mangaListPage(String url) async {
+  Future<MLPage> mangaListPage(String url) async {
     var response = await apiClient.get(url);
 
     return compute(
@@ -52,7 +53,7 @@ class ManganatoAPI {
     );
   }
 
-  Future<List<mn_mangalist.MLElement>> search({
+  Future<MLPage> search({
     SearchStatus status = SearchStatus.both,
     SearchOrderBy orderBy = SearchOrderBy.latest,
     SearchKeyword keyword = SearchKeyword.everything,
@@ -254,19 +255,19 @@ class ManganatoAPI {
   // specified
   static const genreallPage = "https://manganato.com/genre-all/";
 
-  Future<List<mn_mangalist.MLElement>> latestMangaPage(int page) async {
+  Future<MLPage> latestMangaPage(int page) async {
     return await mangaListPage(
       genreallPage + page.toString(),
     );
   }
 
-  Future<List<mn_mangalist.MLElement>> hotMangaPage(int page) async {
+  Future<MLPage> hotMangaPage(int page) async {
     return await mangaListPage(
       genreallPage + page.toString() + "?type=topview",
     );
   }
 
-  Future<List<mn_mangalist.MLElement>> newestMangaPage(int page) async {
+  Future<MLPage> newestMangaPage(int page) async {
     return await mangaListPage(
       genreallPage + page.toString() + "?type=newest",
     );
