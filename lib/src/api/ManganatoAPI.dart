@@ -35,7 +35,7 @@ class ManganatoAPI {
   }
 
   Future<mn_chapter.Chapter> chapterPage(String url) async {
-    var response = await apiClient.get(url);
+    var response = await apiClient.get(url, pageSession: PageSession.readpage);
 
     return compute(
       parse.parseChapterPage,
@@ -139,7 +139,7 @@ class ManganatoAPI {
     return await compute(parse.parseLoginPage, response.body);
   }
 
-  Future<bool> login(String username, String password, String captcha,
+  Future<bool> responsivelogin(String username, String password, String captcha,
       String firstRedirectUrl) async {
     await apiClient.post(
       loginHandle + "?user=$username&pass=$password&captchar=$captcha",
@@ -153,20 +153,23 @@ class ManganatoAPI {
 
     // view-source:https://manganato.com/login_al?u_t=bG9jYWw%3D&u_i={userid}&u_u={username}&u_a=LTE%3D&u_r=login_readmanganato_to_manganato
     if (secondRedirect != null) {
-      var lastRedirect = await apiClient.get(secondRedirect);
+      var mainpageRedirect = await apiClient.get(secondRedirect);
 
-      if (lastRedirect.isCiSessionUpdated) {
+      if (mainpageRedirect.isCiSessionUpdated) {
         var encryptedId =
             RegExp(r'u_i=([a-zA-Z0-9]+)').firstMatch(secondRedirect)!.group(1)!;
         var encryptedUsername =
             RegExp(r'u_u=([a-zA-Z0-9]+)').firstMatch(secondRedirect)!.group(1)!;
         loginData = LoginData(encryptedId, encryptedUsername);
 
+        await apiClient.get(
+            "https://readmanganato.com/login_al?u_t=bG9jYWw=&u_i=$encryptedId&u_u=$encryptedUsername&u_a=LTE=&u_r=manganato_home",
+            pageSession: PageSession.readpage);
+
         this.username = username;
         return true;
       }
     }
-
     // view-source:https://readmanganato.com/login_al?u_t=bG9jYWw=&u_i={userid}&u_u={username}&u_a=LTE=&u_r=manganato_home
     // this not needed, the ciSession reset here goes to the oblivion xd (in my case atleast)
 
