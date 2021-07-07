@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.czappi.artifact2.artifactproject">
+    package="com.czappi.artifactproject.artifact2">
    <application
         android:label="artifactproject"
         android:icon="@mipmap/ic_launcher">

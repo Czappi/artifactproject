@@ -1,4 +1,4 @@
-package com.czappi.artifact2.artifactproject
+package com.czappi.artifactproject.artifact2
 
 import io.flutter.embedding.android.FlutterActivity
 
