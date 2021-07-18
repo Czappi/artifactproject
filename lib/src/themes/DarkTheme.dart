@@ -9,7 +9,7 @@ class DarkTheme extends ArtifactTheme {
   DarkTheme();
 
   @override
-  final Color backgroundColor = const Color.fromARGB(254, 4, 4, 4);
+  final Color backgroundColor = const Color.fromARGB(255, 23, 24, 28);
   @override
   final Color cardColor = const Color.fromARGB(255, 31, 31, 31);
   @override
