@@ -6,7 +6,7 @@ import 'package:artifactproject/src/bloc/MangaPage/MangaPage.dart';
 import 'package:artifactproject/src/providers/NavigationProvider.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
 import 'package:artifactproject/src/translations/Translation.dart';
-import 'package:artifactproject/src/ui/Homepage.dart';
+import 'package:artifactproject/src/ui/MainView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,7 +28,8 @@ class Providers extends StatelessWidget {
       providers: [
         Provider(create: (context) => ManganatoAPI()),
         ChangeNotifierProvider(create: (context) => SettingsProvider(context)),
-        Provider(create: (context) => NavigationProvider(context)),
+        ChangeNotifierProvider(
+            create: (context) => NavigationProvider(context)),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -49,17 +50,20 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Providers(
-      child: ScreenUtilInit(
-        designSize: const Size(411.4, 891.4),
-        builder: () => GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          translations: ArtifactTranslations(),
-          theme: ThemeData(
-            visualDensity: VisualDensity.standard,
+      child: Builder(builder: (context) {
+        return ScreenUtilInit(
+          designSize: const Size(411.4, 891.4),
+          builder: () => GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            translations: ArtifactTranslations(),
+            theme: ThemeData(
+              visualDensity: VisualDensity.standard,
+              backgroundColor: context.atheme.backgroundColor,
+            ),
+            home: const MainView(),
           ),
-          home: const Homepage(),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
