@@ -7,8 +7,8 @@ abstract class ArtifactTheme {
   abstract final Color backgroundColor;
   abstract final Color cardColor;
   abstract final Color buttonColor;
+  abstract final Color disabledIconColor;
   abstract final Color iconColor;
-  abstract final Color focusedIconColor;
   abstract final Color starColor;
 
   /// title of a MangaList item
@@ -34,4 +34,7 @@ abstract class ArtifactTheme {
 
   /// System theme for statusbar
   abstract final SystemUiOverlayStyle systemUiOverlayStyle;
+
+  final BorderRadius standardBorderRadius =
+      const BorderRadius.all(Radius.circular(12));
 }

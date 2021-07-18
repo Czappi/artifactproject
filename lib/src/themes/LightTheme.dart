@@ -1,10 +1,12 @@
 import 'package:artifactproject/src/themes/ArtifactTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // = const Color.fromARGB(255, )
 class LightTheme extends ArtifactTheme {
-  const LightTheme();
+  LightTheme();
 
   @override
   final Color backgroundColor = Colors.white;
@@ -13,19 +15,27 @@ class LightTheme extends ArtifactTheme {
   @override
   final Color buttonColor = const Color.fromARGB(255, 0, 170, 210);
   @override
-  final Color iconColor = const Color.fromARGB(255, 128, 128, 128);
+  final Color disabledIconColor = const Color.fromARGB(255, 128, 128, 128);
   @override
-  final Color focusedIconColor = const Color.fromARGB(255, 245, 245, 245);
+  final Color iconColor = const Color.fromARGB(255, 245, 245, 245);
   @override
   final Color starColor = const Color.fromARGB(255, 242, 201, 78);
 
   /// title of a MangaList item
   @override
-  final TextStyle mltitleTextStyle = const TextStyle();
+  final TextStyle mltitleTextStyle = GoogleFonts.roboto(
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+    fontSize: 20.sp,
+  );
 
   /// subtitle of a MangaList item
   @override
-  final TextStyle mlsubtitleTextStyle = const TextStyle();
+  final TextStyle mlsubtitleTextStyle = GoogleFonts.roboto(
+    color: const Color(0xFFc4c6c8),
+    fontWeight: FontWeight.w500,
+    fontSize: 11.sp,
+  );
 
   /// title of manga in a MangaPage
   @override
