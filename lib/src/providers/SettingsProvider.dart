@@ -20,8 +20,8 @@ class SettingsProvider with ChangeNotifier, DiagnosticableTreeMixin {
   final String _themeOptionKey = _settingsPrefix + "themeoption";
 
   ThemeOption? _themeOption;
-  final DarkTheme _darkTheme = const DarkTheme();
-  final LightTheme _lightTheme = const LightTheme();
+  final DarkTheme _darkTheme = DarkTheme();
+  final LightTheme _lightTheme = LightTheme();
 
   Future<void> setThemeOption(ThemeOption themeOption) async {
     await _prefs.setInt(_themeOptionKey, themeOption.index);
@@ -61,5 +61,5 @@ class SettingsProvider with ChangeNotifier, DiagnosticableTreeMixin {
 }
 
 extension ThemeContextExtension on BuildContext {
-  ArtifactTheme get theme => watch<SettingsProvider>().theme;
+  ArtifactTheme get atheme => watch<SettingsProvider>().theme;
 }
