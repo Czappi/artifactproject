@@ -40,4 +40,8 @@ Map<String, String> en_US = {
   "#genre-psychological": "psychological",
   "#genre-shounenai": "shounen ai",
   "#genre-yuri": "yuri",
+  "#description": "description",
+  "#goodmorning": "good morning",
+  "#goodafternoon": "good afternoon",
+  "#goodevening": "good evening",
 };
