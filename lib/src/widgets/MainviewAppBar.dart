@@ -20,35 +20,38 @@ class MainviewAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 60.h,
-      padding: EdgeInsets.all(8.sp),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          UserAvatar(userImageUrl: userImageUrl),
-          Expanded(
-            child: _TitleText(
-              username: username,
+    return Material(
+      color: Colors.transparent,
+      child: Container(
+        height: 60.h,
+        padding: EdgeInsets.all(8.sp),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            UserAvatar(userImageUrl: userImageUrl),
+            Expanded(
+              child: _TitleText(
+                username: username,
+              ),
             ),
-          ),
-          IconButton(
-            onPressed: searchOnTap,
-            icon: Icon(
-              PhosphorIcons.magnifyingGlassBold,
-              size: 26.sp,
-              color: context.atheme.iconColor,
+            IconButton(
+              onPressed: searchOnTap,
+              icon: Icon(
+                PhosphorIcons.magnifyingGlassBold,
+                size: 26.sp,
+                color: context.atheme.iconColor,
+              ),
             ),
-          ),
-          IconButton(
-            onPressed: notificationOnTap,
-            icon: Icon(
-              PhosphorIcons.bellBold,
-              size: 26.sp,
-              color: context.atheme.iconColor,
+            IconButton(
+              onPressed: notificationOnTap,
+              icon: Icon(
+                PhosphorIcons.bellBold,
+                size: 26.sp,
+                color: context.atheme.iconColor,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
