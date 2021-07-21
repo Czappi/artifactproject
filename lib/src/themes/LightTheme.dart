@@ -11,20 +11,20 @@ class LightTheme extends ArtifactTheme {
   @override
   final Color backgroundColor = Colors.white;
   @override
-  final Color cardColor = const Color.fromARGB(255, 31, 32, 41);
+  final Color cardColor = Colors.white70;
   @override
   final Color buttonColor = const Color.fromARGB(255, 0, 170, 210);
   @override
   final Color disabledIconColor = const Color.fromARGB(255, 128, 128, 128);
   @override
-  final Color iconColor = const Color.fromARGB(255, 245, 245, 245);
+  final Color iconColor = Colors.black87;
   @override
   final Color starColor = const Color.fromARGB(255, 242, 201, 78);
 
   /// title of a MangaList item
   @override
   final TextStyle mltitleTextStyle = GoogleFonts.roboto(
-    color: Colors.white,
+    color: Colors.black,
     fontWeight: FontWeight.bold,
     fontSize: 20.sp,
   );
@@ -32,7 +32,7 @@ class LightTheme extends ArtifactTheme {
   /// subtitle of a MangaList item
   @override
   final TextStyle mlsubtitleTextStyle = GoogleFonts.roboto(
-    color: const Color(0xFFc4c6c8),
+    color: Colors.black45,
     fontWeight: FontWeight.w500,
     fontSize: 11.sp,
   );
