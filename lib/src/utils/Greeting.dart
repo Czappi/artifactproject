@@ -7,7 +7,7 @@ String greeting() {
   if (nh >= 12 && nh < 18) {
     return "#goodafternoon";
   }
-  if (nh >= 18) {
+  if (nh >= 18 || nh < 5) {
     return "#goodevening";
   }
   return "Hey";

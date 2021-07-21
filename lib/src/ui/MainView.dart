@@ -4,7 +4,7 @@ import 'package:artifactproject/src/bloc/MangaList/NewestMangaListBloc.dart';
 import 'package:artifactproject/src/bloc/MangaList/shared/event.dart';
 import 'package:artifactproject/src/providers/NavigationProvider.dart';
 import 'package:artifactproject/src/ui/Mangapage.dart';
-import 'package:artifactproject/src/widgets/HomepageAppBar.dart';
+import 'package:artifactproject/src/widgets/MainviewAppBar.dart';
 import 'package:artifactproject/src/widgets/MLList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,8 +36,8 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SlidingUpPanel(
+    return Material(
+      child: SlidingUpPanel(
         panelBuilder: (sc) => Mangapage(sc),
         controller: context.read<NavigationProvider>().panelController,
         minHeight: 0,
@@ -61,7 +61,7 @@ class MainViewBody extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              HomepageAppBar(
+              MainviewAppBar(
                 searchOnTap: () => context
                     .read<SettingsProvider>()
                     .setThemeOption(ThemeOption.light),

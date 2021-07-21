@@ -55,6 +55,11 @@ class Main extends StatelessWidget {
           designSize: const Size(411.4, 891.4),
           builder: () => GetMaterialApp(
             debugShowCheckedModeBanner: false,
+            locale: const Locale("en", "US"),
+            fallbackLocale: const Locale("en", "US"),
+            supportedLocales: const [
+              Locale("en", "US"),
+            ],
             translations: ArtifactTranslations(),
             theme: ThemeData(
               visualDensity: VisualDensity.standard,

@@ -1,5 +1,5 @@
-// ignore: non_constant_identifier_names
-Map<String, String> en_US = {
+// ignore: constant_identifier_names
+const Map<String, String> en_US = {
   "#genre-action": "action",
   "#genre-fantasy": "fantasy",
   "#genre-manhwa": "manhwa",

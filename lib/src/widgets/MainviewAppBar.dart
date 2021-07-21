@@ -6,11 +6,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
 
-class HomepageAppBar extends StatelessWidget {
+class MainviewAppBar extends StatelessWidget {
   final String? userImageUrl;
   final String username;
   final GestureTapCallback? searchOnTap, notificationOnTap;
-  const HomepageAppBar({
+  const MainviewAppBar({
     Key? key,
     this.username = "undefined",
     this.userImageUrl,
