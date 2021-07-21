@@ -7,9 +7,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' as g;
 
-class MLListItem extends StatelessWidget {
+class MLListBigItem extends StatelessWidget {
   final MLElement mlElement;
-  const MLListItem({Key? key, required this.mlElement}) : super(key: key);
+  const MLListBigItem({Key? key, required this.mlElement}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +36,12 @@ class MLListItem extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: _MLListItemDetails(
+                    child: _MLListBigItemDetails(
                         title: mlElement.title,
                         author: mlElement.author,
                         description: mlElement.descriptionPiece),
                   ),
-                  _MLListItemImage(img: image),
+                  _MLListBigItemImage(img: image),
                 ],
               ),
             )
@@ -52,10 +52,10 @@ class MLListItem extends StatelessWidget {
   }
 }
 
-class _MLListItemDetails extends StatelessWidget {
+class _MLListBigItemDetails extends StatelessWidget {
   final String title, author, description;
 
-  const _MLListItemDetails({
+  const _MLListBigItemDetails({
     Key? key,
     required this.title,
     required this.author,
@@ -115,9 +115,9 @@ class _MLListItemDetails extends StatelessWidget {
   }
 }
 
-class _MLListItemImage extends StatelessWidget {
+class _MLListBigItemImage extends StatelessWidget {
   final ImageProvider img;
-  const _MLListItemImage({
+  const _MLListBigItemImage({
     Key? key,
     required this.img,
   }) : super(key: key);
