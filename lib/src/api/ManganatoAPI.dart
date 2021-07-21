@@ -6,8 +6,6 @@ import 'package:artifactproject/src/models/MNLogin.dart' as mn_login;
 import 'package:artifactproject/src/utils/Enums.dart';
 import 'package:flutter/foundation.dart';
 import 'package:artifactproject/src/models/MNMangaPage.dart' as mn_manga;
-import 'package:artifactproject/src/models/MNMangaListPage.dart'
-    as mn_mangalist;
 
 import 'package:artifactproject/src/api/parse.dart' as parse;
 
@@ -45,12 +43,17 @@ class ManganatoAPI {
   }
 
   Future<MLPage> mangaListPage(String url) async {
-    var response = await apiClient.get(url);
+    try {
+      var response = await apiClient.get(url);
 
-    return compute(
-      parse.parseMangaListPage,
-      response.body,
-    );
+      return compute(
+        parse.parseMangaListPage,
+        response.body,
+      );
+    } catch (e) {
+      print(e);
+      return const MLPage([], 0);
+    }
   }
 
   Future<MLPage> search({
