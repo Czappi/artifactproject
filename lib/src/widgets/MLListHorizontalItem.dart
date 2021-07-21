@@ -11,11 +11,13 @@ class MLListHorizontalItem extends StatelessWidget {
   final MLElement mlElement;
   final MLListItemDetailsType type;
   final double? width, height;
+  final double aspectRatio;
   const MLListHorizontalItem(
       {Key? key,
       required this.mlElement,
       this.height,
       this.width,
+      this.aspectRatio = 348 / 225,
       this.type = MLListItemDetailsType.none})
       : super(key: key);
 
@@ -29,6 +31,7 @@ class MLListHorizontalItem extends StatelessWidget {
         children: [
           _MLListHorizontalItemImage(
             img: NetworkImage(mlElement.imgUrl),
+            aspectRatio: aspectRatio,
           ),
           _MLListHorizontalItemDetails(
             type: type,
@@ -118,15 +121,17 @@ class _MLListHorizontalItemDetails extends StatelessWidget {
 
 class _MLListHorizontalItemImage extends StatelessWidget {
   final ImageProvider img;
+  final double aspectRatio;
   const _MLListHorizontalItemImage({
     Key? key,
     required this.img,
+    required this.aspectRatio,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 348 / 225,
+      aspectRatio: aspectRatio,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: context.atheme.standardBorderRadius,
