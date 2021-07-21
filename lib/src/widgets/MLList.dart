@@ -2,12 +2,11 @@ import 'package:artifactproject/src/bloc/MangaList/shared/bloc.dart';
 import 'package:artifactproject/src/bloc/MangaList/shared/event.dart';
 import 'package:artifactproject/src/bloc/MangaList/shared/state.dart';
 import 'package:artifactproject/src/models/MNMangaListPage.dart';
+import 'package:artifactproject/src/utils/builders.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
-
-typedef MLItemBuilder = Function(BuildContext context, MLElement mlElement);
 
 class MLList<MLBloc extends MangaListBloc> extends StatelessWidget {
   final MLItemBuilder builder;
