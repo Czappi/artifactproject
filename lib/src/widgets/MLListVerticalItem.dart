@@ -1,28 +1,39 @@
 import 'package:artifactproject/src/models/MNMangaListPage.dart';
+import 'package:artifactproject/src/providers/NavigationProvider.dart';
 import 'package:artifactproject/src/utils/Enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:provider/provider.dart';
 
 class MLListVerticalItem extends StatelessWidget {
   final MLElement mlElement;
   final MLListItemDetailsType type;
+  final double? width, height;
   const MLListVerticalItem(
       {Key? key,
       required this.mlElement,
+      this.width,
+      this.height,
       this.type = MLListItemDetailsType.none})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200.h,
+      height: height,
+      width: width,
       margin: EdgeInsets.all(10.sp),
       child: Column(
         children: [
-          _MLListVerticalItemImage(
-            img: NetworkImage(mlElement.imgUrl),
+          InkWell(
+            onTap: () {
+              context.read<NavigationProvider>().navigateTo(mlElement.url);
+            },
+            child: _MLListVerticalItemImage(
+              img: NetworkImage(mlElement.imgUrl),
+            ),
           ),
           _MLListVerticalItemDetails(
             type: type,
@@ -127,22 +138,38 @@ class _MLListVerticalItemImage extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: context.atheme.standardBorderRadius,
-          child: Image(
-            image: img,
-            fit: BoxFit.fitHeight,
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) {
-                return child;
-              }
-              return Center(
-                child: CircularProgressIndicator(
-                  value: loadingProgress.expectedTotalBytes != null
-                      ? loadingProgress.cumulativeBytesLoaded /
-                          loadingProgress.expectedTotalBytes!
-                      : null,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: Image(
+                  image: img,
+                  fit: BoxFit.fitHeight,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
+              ),
+              Positioned.fill(
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      //context.read<NavigationProvider>().navigateTo(mlElement.url);
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

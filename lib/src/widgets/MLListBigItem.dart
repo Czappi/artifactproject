@@ -9,7 +9,13 @@ import 'package:get/get.dart' as g;
 
 class MLListBigItem extends StatelessWidget {
   final MLElement mlElement;
-  const MLListBigItem({Key? key, required this.mlElement}) : super(key: key);
+  final double? height, width;
+  const MLListBigItem({
+    Key? key,
+    required this.mlElement,
+    this.height,
+    this.width,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +27,7 @@ class MLListBigItem extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.all(10.sp),
         height: 220.h,
+        width: 411.4.w,
         child: Stack(
           clipBehavior: Clip.antiAlias,
           children: [
@@ -71,7 +78,8 @@ class _MLListBigItemDetails extends StatelessWidget {
           padding: EdgeInsets.only(right: 8.sp),
           child: Text(
             title,
-            style: context.atheme.mltitleTextStyle,
+            style:
+                context.atheme.mltitleTextStyle.copyWith(color: Colors.white),
             maxLines: 2,
             overflow: TextOverflow.fade,
           ),
@@ -81,6 +89,7 @@ class _MLListBigItemDetails extends StatelessWidget {
           style: context.atheme.mlsubtitleTextStyle.copyWith(
             fontSize: 13.sp,
             fontWeight: FontWeight.w600,
+            color: const Color(0xFFc4c6c8),
           ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -103,7 +112,9 @@ class _MLListBigItemDetails extends StatelessWidget {
               ),
               Text(
                 description + '...',
-                style: context.atheme.mlsubtitleTextStyle,
+                style: context.atheme.mlsubtitleTextStyle.copyWith(
+                  color: const Color(0xFFc4c6c8),
+                ),
                 maxLines: 3,
                 overflow: TextOverflow.fade,
               ),
