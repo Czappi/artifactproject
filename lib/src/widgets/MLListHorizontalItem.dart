@@ -28,6 +28,7 @@ class MLListHorizontalItem extends StatelessWidget {
       width: width,
       margin: EdgeInsets.all(10.sp),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _MLListHorizontalItemImage(
             img: NetworkImage(mlElement.imgUrl),
