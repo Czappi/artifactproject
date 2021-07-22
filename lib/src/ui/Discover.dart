@@ -110,10 +110,10 @@ class _LatestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<SettingsProvider, DiscoverStyleOption>(
+    return Selector<SettingsProvider, DiscoverLayoutOption>(
         selector: (context, provider) => provider.discoverStyle,
         builder: (context, option, child) {
-          if (option == DiscoverStyleOption.list) {
+          if (option == DiscoverLayoutOption.list) {
             return MLList<LatestMangaListBloc>(
               builder: (context, element) => MLListBigItem(mlElement: element),
             );
@@ -131,10 +131,10 @@ class _NewestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<SettingsProvider, DiscoverStyleOption>(
+    return Selector<SettingsProvider, DiscoverLayoutOption>(
         selector: (context, provider) => provider.discoverStyle,
         builder: (context, option, child) {
-          if (option == DiscoverStyleOption.list) {
+          if (option == DiscoverLayoutOption.list) {
             return MLList<NewestMangaListBloc>(
               builder: (context, element) => MLListBigItem(mlElement: element),
             );
@@ -152,10 +152,10 @@ class _MostViewedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<SettingsProvider, DiscoverStyleOption>(
+    return Selector<SettingsProvider, DiscoverLayoutOption>(
         selector: (context, provider) => provider.discoverStyle,
         builder: (context, option, child) {
-          if (option == DiscoverStyleOption.list) {
+          if (option == DiscoverLayoutOption.list) {
             return MLList<HotMangaListBloc>(
               builder: (context, element) => MLListBigItem(mlElement: element),
             );

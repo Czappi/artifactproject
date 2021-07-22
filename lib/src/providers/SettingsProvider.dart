@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 enum ThemeOption { light, dark, device }
-enum DiscoverStyleOption { grid, list }
+enum DiscoverLayoutOption { grid, list }
 
 class SettingsProvider with ChangeNotifier, DiagnosticableTreeMixin {
   BuildContext context;
@@ -53,27 +53,27 @@ class SettingsProvider with ChangeNotifier, DiagnosticableTreeMixin {
     }
   }
 
-  // discover style
-  final String _discoverStyleOptionKey = _settingsPrefix + "discoverStyle";
+  // discover layout
+  final String _discoverLayoutOptionKey = _settingsPrefix + "discoverLayout";
 
-  DiscoverStyleOption? _discoverStyleOption;
+  DiscoverLayoutOption? _discoverLayoutOption;
 
-  Future<void> setDiscoverStyleOption(
-      DiscoverStyleOption discoverStyleOption) async {
-    await _prefs.setInt(_discoverStyleOptionKey, discoverStyleOption.index);
-    _discoverStyleOption = discoverStyleOption;
+  Future<void> setDiscoverLayoutOption(
+      DiscoverLayoutOption discoverLayoutOption) async {
+    await _prefs.setInt(_discoverLayoutOptionKey, discoverLayoutOption.index);
+    _discoverLayoutOption = discoverLayoutOption;
     notifyListeners();
   }
 
-  DiscoverStyleOption getDiscoverStyleOption() {
-    var to =
-        DiscoverStyleOption.values[_prefs.getInt(_discoverStyleOptionKey) ?? 0];
-    _discoverStyleOption = to;
+  DiscoverLayoutOption getDiscoverLayoutOption() {
+    var to = DiscoverLayoutOption
+        .values[_prefs.getInt(_discoverLayoutOptionKey) ?? 0];
+    _discoverLayoutOption = to;
     return to;
   }
 
-  DiscoverStyleOption get discoverStyle =>
-      _discoverStyleOption ?? getDiscoverStyleOption();
+  DiscoverLayoutOption get discoverStyle =>
+      _discoverLayoutOption ?? getDiscoverLayoutOption();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
