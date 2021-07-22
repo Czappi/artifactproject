@@ -44,5 +44,8 @@ const Map<String, String> en_US = {
   "#goodmorning": "good morning",
   "#goodafternoon": "good afternoon",
   "#goodevening": "good evening",
-  "#showmore": "show more"
+  "#showmore": "show more",
+  "#latest": "latest",
+  "#mostviewed": "most viewed",
+  "#newest": "newest",
 };
