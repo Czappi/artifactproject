@@ -73,15 +73,15 @@ class _DiscoverTabBar extends StatelessWidget {
       unselectedLabelColor: context.atheme.mltitleTextStyle.color,
       tabs: [
         Tab(
-          height: 40,
+          height: 40.h,
           text: "#latest".tr.capitalizeFirst,
         ),
         Tab(
-          height: 40,
+          height: 40.h,
           text: "#mostviewed".tr.capitalizeFirst,
         ),
         Tab(
-          height: 40,
+          height: 40.h,
           text: "#newest".tr.capitalizeFirst,
         ),
       ],
@@ -121,78 +121,3 @@ class _MostViewedPage extends StatelessWidget {
     );
   }
 }
-
-/*
-class _DiscoverDropdownButton extends StatelessWidget {
-  const _DiscoverDropdownButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      child: Selector<NavigationProvider, DiscoverPage>(
-        selector: (context, provider) => provider.currentDiscoverPage,
-        builder: (context, discoverpage, child) {
-          return DropdownButton<DiscoverPage>(
-            icon: const Icon(PhosphorIcons.caretDownBold),
-            underline: const SizedBox(),
-            iconSize: 24,
-            elevation: 16,
-            style: context.atheme.mltitleTextStyle,
-            borderRadius: context.atheme.standardBorderRadius,
-            dropdownColor: context.atheme.cardColor,
-            alignment: Alignment.centerRight,
-            value: discoverpage,
-            onChanged: (page) {
-              context.read<NavigationProvider>().discoverPage(page!);
-            },
-            selectedItemBuilder: (context) => [
-              Text(
-                "latest",
-                style:
-                    context.atheme.mltitleTextStyle.copyWith(fontSize: 25.sp),
-              ),
-              Text(
-                "mostviewed",
-                style:
-                    context.atheme.mltitleTextStyle.copyWith(fontSize: 25.sp),
-              ),
-              Text(
-                "newest",
-                style:
-                    context.atheme.mltitleTextStyle.copyWith(fontSize: 25.sp),
-              ),
-            ],
-            items: const [
-              DropdownMenuItem(
-                child: Text("latest"),
-                value: DiscoverPage.latest,
-              ),
-              DropdownMenuItem(
-                child: Text("mostviewed"),
-                value: DiscoverPage.mostviewed,
-              ),
-              DropdownMenuItem(
-                child: Text("newest"),
-                value: DiscoverPage.newest,
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-}
-*/
-MLElement fakemlelement = MLElement(
-  title: "Akkun To Kanojo",
-  author: "Kakitsubata Waka",
-  imgUrl: "https://avt.mkklcdnv6temp.com/18/n/22-1600657535.jpg",
-  url: "url",
-  descriptionPiece:
-      'The romantic comedy follows the everyday life of an extremely tsundere (initially aloof and abrasive, but later kind-hearted) boy named Atsuhiro "Akkun" Kagari and his girlfriend Non "Nontan" Katagiri. Akkun\'s behavior is harsh towards Nontan with verbal abuse and neglect, but he actually is head-over-heels for her and habitually acts like a stalker by tailing her or eavesd',
-  updated: DateTime.now(),
-  ratingAverage: 4.7,
-  views: 322286,
-  latestChapter: const Chapter("Chapter 30.5", "chapurl"),
-);

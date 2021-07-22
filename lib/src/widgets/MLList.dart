@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MLList<MLBloc extends MangaListBloc> extends StatelessWidget {
   final MLItemBuilder builder;
@@ -26,7 +27,7 @@ class MLList<MLBloc extends MangaListBloc> extends StatelessWidget {
                   itemBuilder: (context, item, index) => builder(context, item),
                   newPageProgressIndicatorBuilder: (context) {
                     return SizedBox(
-                      height: 100,
+                      height: 100.h,
                       child: Center(
                         child: CircularProgressIndicator(
                           color: context.atheme.buttonColor,

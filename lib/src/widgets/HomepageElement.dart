@@ -27,7 +27,7 @@ class HomepageElement extends StatelessWidget {
         children: [
           Container(
             height: 70.h,
-            padding: const EdgeInsets.fromLTRB(15, 18, 15, 12),
+            padding: EdgeInsets.fromLTRB(15.sp, 18.sp, 15.sp, 12.sp),
             child: Row(
               children: [
                 _TitleSubtitle(
