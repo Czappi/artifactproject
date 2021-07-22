@@ -48,6 +48,8 @@ dependencies:
   google_fonts: ^2.1.0
   phosphor_flutter: ^1.2.0
 
+  quick_actions: ^0.6.0+3
+
   shared_preferences: ^2.0.6
   get: ^4.1.4
   flutter_bloc: ^7.0.1

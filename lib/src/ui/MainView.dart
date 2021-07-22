@@ -11,10 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:quick_actions/quick_actions.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:provider/provider.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class Mainview extends StatefulWidget {
   const Mainview({Key? key}) : super(key: key);
@@ -29,6 +31,38 @@ class _MainviewState extends State<Mainview> {
     BlocProvider.of<HotMangaListBloc>(context).add(const InitEvent());
     BlocProvider.of<LatestMangaListBloc>(context).add(const InitEvent());
     BlocProvider.of<NewestMangaListBloc>(context).add(const InitEvent());
+
+    const QuickActions quickActions = QuickActions();
+    quickActions.initialize((shortcutType) {
+      if (shortcutType == 'action_home') {
+        context.read<NavigationProvider>().gotoPage(NavPage.home);
+      }
+      if (shortcutType == 'action_discover') {
+        context.read<NavigationProvider>().gotoPage(NavPage.discover);
+      }
+      if (shortcutType == 'action_favorites') {
+        context.read<NavigationProvider>().gotoPage(NavPage.bookmarks);
+      }
+    });
+
+    quickActions.setShortcutItems(<ShortcutItem>[
+      ShortcutItem(
+        type: 'action_home',
+        localizedTitle: '#homepage'.tr,
+        icon: 'ic_shortcut_homepage',
+      ),
+      ShortcutItem(
+        type: 'action_discover',
+        localizedTitle: '#discover'.tr,
+        icon: 'ic_shortcut_discover',
+      ),
+      ShortcutItem(
+        type: 'action_favorites',
+        localizedTitle: '#favorites'.tr,
+        icon: 'ic_shortcut_favorites',
+      ),
+    ]);
+
     super.initState();
   }
 

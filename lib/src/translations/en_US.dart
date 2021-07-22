@@ -55,4 +55,7 @@ const Map<String, String> en_US = {
   "#newestmangahomepageelement-title": "New Release!",
   "#newestmangahomepageelement-desc": "Don't miss out on the newest releases",
   "#guest": "guest",
+  "#homepage": "Home",
+  "#discover": "Discover",
+  "#favorites": "Favorites",
 };
