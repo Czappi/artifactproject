@@ -154,6 +154,7 @@ class _MLListBigItemImage extends StatelessWidget {
               }
               return Center(
                 child: CircularProgressIndicator(
+                  color: context.atheme.buttonColor,
                   value: loadingProgress.expectedTotalBytes != null
                       ? loadingProgress.cumulativeBytesLoaded /
                           loadingProgress.expectedTotalBytes!
