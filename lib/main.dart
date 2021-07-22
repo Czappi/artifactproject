@@ -6,7 +6,7 @@ import 'package:artifactproject/src/bloc/MangaPage/MangaPage.dart';
 import 'package:artifactproject/src/providers/NavigationProvider.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
 import 'package:artifactproject/src/translations/Translation.dart';
-import 'package:artifactproject/src/ui/MainView.dart';
+import 'package:artifactproject/src/ui/Mainview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -65,7 +65,7 @@ class Main extends StatelessWidget {
               visualDensity: VisualDensity.standard,
               backgroundColor: context.atheme.backgroundColor,
             ),
-            home: const MainView(),
+            home: const Mainview(),
           ),
         );
       }),
