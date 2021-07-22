@@ -8,11 +8,11 @@ import 'package:artifactproject/src/providers/SettingsProvider.dart';
 
 class MainviewAppBar extends StatelessWidget {
   final String? userImageUrl;
-  final String username;
+  final String? username;
   final GestureTapCallback? searchOnTap, notificationOnTap;
   const MainviewAppBar({
     Key? key,
-    this.username = "undefined",
+    this.username,
     this.userImageUrl,
     this.notificationOnTap,
     this.searchOnTap,
@@ -31,7 +31,7 @@ class MainviewAppBar extends StatelessWidget {
             UserAvatar(userImageUrl: userImageUrl),
             Expanded(
               child: _TitleText(
-                username: username,
+                username: username ?? "#guest".tr.capitalizeFirst!,
               ),
             ),
             IconButton(
