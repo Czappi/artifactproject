@@ -2,6 +2,7 @@ import 'package:artifactproject/src/bloc/MangaList/HotMangaListBloc.dart';
 import 'package:artifactproject/src/bloc/MangaList/LatestMangaListBloc.dart';
 import 'package:artifactproject/src/bloc/MangaList/NewestMangaListBloc.dart';
 import 'package:artifactproject/src/models/MNMangaListPage.dart';
+import 'package:artifactproject/src/providers/NavigationProvider.dart';
 import 'package:artifactproject/src/widgets/MLGrid.dart';
 import 'package:artifactproject/src/widgets/MLListVerticalItem.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:artifactproject/src/widgets/shared/UnderlineTabIndicator.dart'
     as a;
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 class Discover extends StatefulWidget {
   const Discover({Key? key}) : super(key: key);
@@ -24,28 +26,40 @@ class _DiscoverState extends State<Discover> with TickerProviderStateMixin {
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
+    tabController.addListener(() {
+      context.read<NavigationProvider>().currentDiscoverPage =
+          DiscoverPage.values[tabController.index];
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _DiscoverTabBar(
-          tabController: tabController,
-        ),
-        Expanded(
-          child: TabBarView(
-            controller: tabController,
-            children: const [
-              _LatestPage(),
-              _MostViewedPage(),
-              _NewestPage(),
-            ],
+    return Selector<NavigationProvider, DiscoverPage>(
+      selector: (context, provider) => provider.currentDiscoverPage,
+      shouldRebuild: (prev, next) => prev != next,
+      builder: (context, page, child) {
+        tabController.index = page.index;
+        return child!;
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _DiscoverTabBar(
+            tabController: tabController,
           ),
-        ),
-      ],
+          Expanded(
+            child: TabBarView(
+              controller: tabController,
+              children: const [
+                _LatestPage(),
+                _MostViewedPage(),
+                _NewestPage(),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

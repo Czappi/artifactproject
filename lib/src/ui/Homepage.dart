@@ -2,6 +2,7 @@ import 'package:artifactproject/src/bloc/MangaList/HotMangaListBloc.dart';
 import 'package:artifactproject/src/bloc/MangaList/LatestMangaListBloc.dart';
 import 'package:artifactproject/src/bloc/MangaList/NewestMangaListBloc.dart';
 import 'package:artifactproject/src/bloc/MangaList/shared/state.dart';
+import 'package:artifactproject/src/providers/NavigationProvider.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
 import 'package:artifactproject/src/widgets/HomepageElement.dart';
 import 'package:artifactproject/src/widgets/MLListHorizontalItem.dart';
@@ -37,7 +38,11 @@ class _HotMangaHomepageElement extends StatelessWidget {
     return HomepageElement(
       title: "#hotmangahomepageelement-title".tr,
       subtitle: "#hotmangahomepageelement-desc".tr,
-      onShowMore: () {},
+      onShowMore: () {
+        context
+            .read<NavigationProvider>()
+            .discoverPage(DiscoverPage.mostviewed);
+      },
       backgroundColor: Colors.indigo.withOpacity(0.1),
       child: SizedBox(
         height: 200.h,
@@ -81,7 +86,9 @@ class _LatestMangaHomepageElement extends StatelessWidget {
     return HomepageElement(
       title: "#latestmangahomepageelement-title".tr,
       subtitle: "#latestmangahomepageelement-desc".tr,
-      onShowMore: () {},
+      onShowMore: () {
+        context.read<NavigationProvider>().discoverPage(DiscoverPage.latest);
+      },
       //backgroundColor: Colors.indigo.withOpacity(0.1),
       child: SizedBox(
         height: 260.h,
@@ -125,7 +132,9 @@ class _NewestMangaHomepageElement extends StatelessWidget {
     return HomepageElement(
       title: "#newestmangahomepageelement-title".tr,
       subtitle: "#newestmangahomepageelement-desc".tr,
-      onShowMore: () {},
+      onShowMore: () {
+        context.read<NavigationProvider>().discoverPage(DiscoverPage.newest);
+      },
       //backgroundColor: Colors.indigo.withOpacity(0.1),
       child: SizedBox(
         height: 200.h,

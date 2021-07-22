@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 enum NavPage { home, discover, bookmarks, settings }
-enum DiscoverPage { mostviewed, latest, newest }
+enum DiscoverPage { latest, mostviewed, newest }
 
 class NavigationProvider with ChangeNotifier, DiagnosticableTreeMixin {
   BuildContext context;
@@ -26,6 +26,7 @@ class NavigationProvider with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   void discoverPage(DiscoverPage discoverPage) {
+    currentNavPage = NavPage.discover;
     currentDiscoverPage = discoverPage;
     notifyListeners();
   }
