@@ -37,7 +37,9 @@ class MLListHorizontalItem extends StatelessWidget {
           _MLListHorizontalItemDetails(
             type: type,
             author: mlElement.author,
-            latestChapter: mlElement.latestChapter.title,
+            latestChapter: (mlElement.latestChapter != null)
+                ? mlElement.latestChapter!.title
+                : "",
             ratingAverage: mlElement.ratingAverage,
             title: mlElement.title,
           ),

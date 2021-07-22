@@ -6,7 +6,7 @@ class MLElement extends Equatable {
   final DateTime updated;
   final double ratingAverage;
   final int views;
-  final Chapter latestChapter;
+  final Chapter? latestChapter;
 
   const MLElement({
     required this.title,
@@ -30,6 +30,6 @@ class MLElement extends Equatable {
         updated,
         ratingAverage,
         views,
-        latestChapter.props
+        latestChapter
       ];
 }

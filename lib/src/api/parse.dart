@@ -236,12 +236,13 @@ MLPage parseMangaListPage(String responseBody) {
           0.0;
 
       // latestChapter
-      var alchap = divinfo.querySelector("a.genres-item-chap")!;
-      String lchapTitle = alchap.text;
-      String lchapHref = alchap.attributes["href"]!;
-
-      mn_mangalist.Chapter latestChapter =
-          mn_mangalist.Chapter(lchapTitle, lchapHref);
+      var alchap = divinfo.querySelector("a.genres-item-chap");
+      mn_mangalist.Chapter? latestChapter;
+      if (alchap != null) {
+        String lchapTitle = alchap.text;
+        String lchapHref = alchap.attributes["href"]!;
+        latestChapter = mn_mangalist.Chapter(lchapTitle, lchapHref);
+      }
 
       // author
       String author = divinfo.querySelector("span.genres-item-author")!.text;
