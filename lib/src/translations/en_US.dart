@@ -48,4 +48,10 @@ const Map<String, String> en_US = {
   "#latest": "latest",
   "#mostviewed": "most viewed",
   "#newest": "newest",
+  "#hotmangahomepageelement-title": "Most Popular Manga",
+  "#hotmangahomepageelement-desc": "Lot of interesting manga here",
+  "#latestmangahomepageelement-title": "Update Manga",
+  "#latestmangahomepageelement-desc": "Don't miss this week's update",
+  "#newestmangahomepageelement-title": "New Release!",
+  "#newestmangahomepageelement-desc": "Don't miss out on the newest releases",
 };

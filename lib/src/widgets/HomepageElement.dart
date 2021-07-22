@@ -102,6 +102,7 @@ class _TitleSubtitle extends StatelessWidget {
           Text(
             title,
             style: context.atheme.mltitleTextStyle,
+            maxLines: 1,
           ),
           Expanded(
             child: Align(
@@ -109,6 +110,7 @@ class _TitleSubtitle extends StatelessWidget {
               child: Text(
                 subtitle,
                 style: context.atheme.mlsubtitleTextStyle,
+                maxLines: 1,
               ),
             ),
           ),
