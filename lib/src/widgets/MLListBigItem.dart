@@ -22,7 +22,7 @@ class MLListBigItem extends StatelessWidget {
     var image = NetworkImage(mlElement.imgUrl);
     return InkWell(
       onTap: () {
-        context.read<NavigationProvider>().navigateTo(mlElement.url);
+        //context.read<NavigationProvider>().navigateTo(mlElement.url);
       },
       child: Container(
         margin: EdgeInsets.all(10.sp),

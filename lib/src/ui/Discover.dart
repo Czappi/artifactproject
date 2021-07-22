@@ -4,6 +4,8 @@ import 'package:artifactproject/src/bloc/MangaList/NewestMangaListBloc.dart';
 import 'package:artifactproject/src/models/MNMangaListPage.dart';
 import 'package:artifactproject/src/providers/NavigationProvider.dart';
 import 'package:artifactproject/src/widgets/MLGrid.dart';
+import 'package:artifactproject/src/widgets/MLList.dart';
+import 'package:artifactproject/src/widgets/MLListBigItem.dart';
 import 'package:artifactproject/src/widgets/MLListVerticalItem.dart';
 import 'package:flutter/material.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
@@ -108,9 +110,19 @@ class _LatestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MLGrid<LatestMangaListBloc>(
-      builder: (context, element) => MLListVerticalItem(mlElement: element),
-    );
+    return Selector<SettingsProvider, DiscoverStyleOption>(
+        selector: (context, provider) => provider.discoverStyle,
+        builder: (context, option, child) {
+          if (option == DiscoverStyleOption.list) {
+            return MLList<LatestMangaListBloc>(
+              builder: (context, element) => MLListBigItem(mlElement: element),
+            );
+          }
+          return MLGrid<LatestMangaListBloc>(
+            builder: (context, element) =>
+                MLListVerticalItem(mlElement: element),
+          );
+        });
   }
 }
 
@@ -119,9 +131,19 @@ class _NewestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MLGrid<NewestMangaListBloc>(
-      builder: (context, element) => MLListVerticalItem(mlElement: element),
-    );
+    return Selector<SettingsProvider, DiscoverStyleOption>(
+        selector: (context, provider) => provider.discoverStyle,
+        builder: (context, option, child) {
+          if (option == DiscoverStyleOption.list) {
+            return MLList<NewestMangaListBloc>(
+              builder: (context, element) => MLListBigItem(mlElement: element),
+            );
+          }
+          return MLGrid<NewestMangaListBloc>(
+            builder: (context, element) =>
+                MLListVerticalItem(mlElement: element),
+          );
+        });
   }
 }
 
@@ -130,8 +152,18 @@ class _MostViewedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MLGrid<HotMangaListBloc>(
-      builder: (context, element) => MLListVerticalItem(mlElement: element),
-    );
+    return Selector<SettingsProvider, DiscoverStyleOption>(
+        selector: (context, provider) => provider.discoverStyle,
+        builder: (context, option, child) {
+          if (option == DiscoverStyleOption.list) {
+            return MLList<HotMangaListBloc>(
+              builder: (context, element) => MLListBigItem(mlElement: element),
+            );
+          }
+          return MLGrid<HotMangaListBloc>(
+            builder: (context, element) =>
+                MLListVerticalItem(mlElement: element),
+          );
+        });
   }
 }

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 enum ThemeOption { light, dark, device }
+enum DiscoverStyleOption { grid, list }
 
 class SettingsProvider with ChangeNotifier, DiagnosticableTreeMixin {
   BuildContext context;
@@ -51,6 +52,28 @@ class SettingsProvider with ChangeNotifier, DiagnosticableTreeMixin {
         return _lightTheme;
     }
   }
+
+  // discover style
+  final String _discoverStyleOptionKey = _settingsPrefix + "discoverStyle";
+
+  DiscoverStyleOption? _discoverStyleOption;
+
+  Future<void> setDiscoverStyleOption(
+      DiscoverStyleOption discoverStyleOption) async {
+    await _prefs.setInt(_discoverStyleOptionKey, discoverStyleOption.index);
+    _discoverStyleOption = discoverStyleOption;
+    notifyListeners();
+  }
+
+  DiscoverStyleOption getDiscoverStyleOption() {
+    var to =
+        DiscoverStyleOption.values[_prefs.getInt(_discoverStyleOptionKey) ?? 0];
+    _discoverStyleOption = to;
+    return to;
+  }
+
+  DiscoverStyleOption get discoverStyle =>
+      _discoverStyleOption ?? getDiscoverStyleOption();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

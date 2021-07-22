@@ -96,10 +96,10 @@ class MainviewBody extends StatelessWidget {
               MainviewAppBar(
                 searchOnTap: () => context
                     .read<SettingsProvider>()
-                    .setThemeOption(ThemeOption.light),
+                    .setDiscoverStyleOption(DiscoverStyleOption.list),
                 notificationOnTap: () => context
                     .read<SettingsProvider>()
-                    .setThemeOption(ThemeOption.dark),
+                    .setDiscoverStyleOption(DiscoverStyleOption.grid),
               ),
               Expanded(
                 child: Selector<NavigationProvider, NavPage>(
