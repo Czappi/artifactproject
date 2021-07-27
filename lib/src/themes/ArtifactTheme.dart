@@ -1,8 +1,11 @@
+import 'package:artifactproject/src/providers/SettingsProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 abstract class ArtifactTheme {
   const ArtifactTheme();
+
+  abstract final ThemeOption themeOption;
 
   abstract final Color backgroundColor;
   abstract final Color cardColor;

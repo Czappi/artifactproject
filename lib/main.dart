@@ -61,7 +61,10 @@ class Main extends StatelessWidget {
               Locale("en", "US"),
             ],
             translations: ArtifactTranslations(),
-            theme: ThemeData(
+            theme: (context.atheme.themeOption == ThemeOption.dark
+                    ? ThemeData.dark()
+                    : ThemeData.light())
+                .copyWith(
               visualDensity: VisualDensity.standard,
               backgroundColor: context.atheme.backgroundColor,
             ),

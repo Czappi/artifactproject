@@ -1,3 +1,4 @@
+import 'package:artifactproject/src/providers/SettingsProvider.dart';
 import 'package:artifactproject/src/themes/ArtifactTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // = const Color.fromARGB(255, )
 class DarkTheme extends ArtifactTheme {
   DarkTheme();
+
+  @override
+  ThemeOption get themeOption => ThemeOption.dark;
 
   @override
   final Color backgroundColor = const Color.fromARGB(255, 23, 24, 28);
