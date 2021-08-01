@@ -6,6 +6,7 @@ import 'package:artifactproject/src/providers/NavigationProvider.dart';
 import 'package:artifactproject/src/ui/Discover.dart';
 import 'package:artifactproject/src/ui/Homepage.dart';
 import 'package:artifactproject/src/ui/Mangapage.dart';
+import 'package:artifactproject/src/ui/Search.dart';
 import 'package:artifactproject/src/widgets/MainviewAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -94,12 +95,14 @@ class MainviewBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               MainviewAppBar(
-                searchOnTap: () => context
-                    .read<SettingsProvider>()
-                    .setDiscoverLayoutOption(DiscoverLayoutOption.list),
+                searchOnTap: () => Get.to(() => const Search()),
                 notificationOnTap: () => context
                     .read<SettingsProvider>()
-                    .setDiscoverLayoutOption(DiscoverLayoutOption.grid),
+                    .setThemeOption(
+                        context.read<SettingsProvider>().themeOption ==
+                                ThemeOption.dark
+                            ? ThemeOption.light
+                            : ThemeOption.dark),
               ),
               Expanded(
                 child: Selector<NavigationProvider, NavPage>(

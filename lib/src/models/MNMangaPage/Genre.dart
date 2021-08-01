@@ -8,12 +8,12 @@ class Genre extends Equatable {
   @override
   List<Object> get props => [name, id];
 
-  static Genre? byId(String id) => genres[id];
+  static Genre? byId(String id) => genreIdMap[id];
 
   static Genre? fromLink(String link) {
     var regex = RegExp(r"genre-(.*[0-9])").firstMatch(link);
     if (regex != null && regex.groupCount > 0) {
-      return genres[regex.group(1)];
+      return genreIdMap[regex.group(1)];
     } else {
       return null;
     }
@@ -60,7 +60,7 @@ class Genre extends Equatable {
   static const Genre shounenai = Genre("#genre-shounenai", "34");
   static const Genre yuri = Genre("#genre-yuri", "42");
 
-  static const Map<String, Genre> genres = {
+  static const Map<String, Genre> genreIdMap = {
     "2": action,
     "12": fantasy,
     "43": manhwa,
@@ -102,4 +102,46 @@ class Genre extends Equatable {
     "34": shounenai,
     "42": yuri,
   };
+  static const List<Genre> genres = [
+    action,
+    fantasy,
+    manhwa,
+    romance,
+    sliceoflife,
+    adult,
+    genderblender,
+    martialarts,
+    schoollife,
+    smut,
+    adventure,
+    harem,
+    mature,
+    scifi,
+    sports,
+    comedy,
+    historical,
+    mecha,
+    seinen,
+    supernatural,
+    cooking,
+    horror,
+    medical,
+    shoujo,
+    tragedy,
+    doujinshi,
+    isekai,
+    mystery,
+    shoujoai,
+    webtoons,
+    drama,
+    josei,
+    oneshot,
+    shounen,
+    yaoi,
+    ecchi,
+    manhua,
+    psychological,
+    shounenai,
+    yuri,
+  ];
 }
