@@ -72,10 +72,10 @@ class ManganatoAPI {
       case SearchStatus.both:
         break;
       case SearchStatus.completed:
-        url + "&sts=completed";
+        url = url + "&sts=completed";
         break;
       case SearchStatus.ongoing:
-        url + "&sts=ongoing";
+        url = url + "&sts=ongoing";
         break;
       default:
     }
@@ -85,13 +85,13 @@ class ManganatoAPI {
       case SearchOrderBy.latest:
         break;
       case SearchOrderBy.az:
-        url + "&orby=az";
+        url = url + "&orby=az";
         break;
       case SearchOrderBy.newest:
-        url + "&orby=newest";
+        url = url + "&orby=newest";
         break;
       case SearchOrderBy.topview:
-        url + "&orby=topview";
+        url = url + "&orby=topview";
         break;
       default:
     }
@@ -102,35 +102,35 @@ class ManganatoAPI {
         case SearchKeyword.everything:
           break;
         case SearchKeyword.nameTitle:
-          url + "&keyt=title";
+          url = url + "&keyt=title";
           break;
         case SearchKeyword.alternativeName:
-          url + "&keyt=alternative";
+          url = url + "&keyt=alternative";
           break;
         case SearchKeyword.author:
-          url + "&keyt=author";
+          url = url + "&keyt=author";
           break;
         default:
       }
-      url + "&keyw=$search";
+      url = url + "&keyw=$search";
     }
 
     // genreInclude
     var genreIncludeIds = genreInclude.map((e) => e.id);
     if (genreIncludeIds.isNotEmpty) {
       String gIIdsString = genreIncludeIds.join("_");
-      url + "&g_i=_${gIIdsString}_";
+      url = url + "&g_i=_${gIIdsString}_";
     }
 
     // genreExculde
     var genreExcludeIds = genreExclude.map((e) => e.id);
     if (genreExcludeIds.isNotEmpty) {
       String gEIdsString = genreExcludeIds.join("_");
-      url + "&g_i=_${gEIdsString}_";
+      url = url + "&g_i=_${gEIdsString}_";
     }
 
     // page
-    url + "&page=$page";
+    url = url + "&page=$page";
 
     return await mangaListPage(url);
   }
