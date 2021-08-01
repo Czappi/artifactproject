@@ -41,7 +41,7 @@ class NewestMangaListBloc extends MangaListBloc with DiagnosticableTreeMixin {
 
       // if the last item is the same as the new last item then append an empty last page
       if (event.pageKey == mp.lastPage) {
-        pagingController.appendLastPage([]);
+        pagingController.appendLastPage(mp.mlElements);
       }
 
       // if not the last page then append the new items
