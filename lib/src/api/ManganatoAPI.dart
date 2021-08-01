@@ -185,25 +185,28 @@ class ManganatoAPI {
     var nextPage = 1;
     var lastPage = 1;
 
-    var firstResponse =
-        await apiClient.get(bookmarkPageLink + "?page=$nextPage");
-    var firstbookmarkpage =
-        await compute(parse.parseBookmarkPage, firstResponse.body);
+    if (loginData != null) {
+      var firstResponse =
+          await apiClient.get(bookmarkPageLink + "?page=$nextPage");
+      var firstbookmarkpage =
+          await compute(parse.parseBookmarkPage, firstResponse.body);
 
-    bookmarks.addAll(firstbookmarkpage.bookmarks);
+      bookmarks.addAll(firstbookmarkpage.bookmarks);
 
-    nextPage = firstbookmarkpage.currentPage + 1;
-    lastPage = firstbookmarkpage.lastPage;
+      nextPage = firstbookmarkpage.currentPage + 1;
+      lastPage = firstbookmarkpage.lastPage;
 
-    for (nextPage; nextPage <= lastPage; nextPage++) {
-      var response = await apiClient.get(bookmarkPageLink + "?page=$nextPage");
-      var bookmarkpage = await compute(parse.parseBookmarkPage, response.body);
+      for (nextPage; nextPage <= lastPage; nextPage++) {
+        var response =
+            await apiClient.get(bookmarkPageLink + "?page=$nextPage");
+        var bookmarkpage =
+            await compute(parse.parseBookmarkPage, response.body);
 
-      lastPage = bookmarkpage.lastPage;
+        lastPage = bookmarkpage.lastPage;
 
-      bookmarks.addAll(bookmarkpage.bookmarks);
+        bookmarks.addAll(bookmarkpage.bookmarks);
+      }
     }
-
     return bookmarks;
   }
 
