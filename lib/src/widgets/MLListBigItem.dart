@@ -1,9 +1,7 @@
 import 'package:artifactproject/src/models/MNMangaListPage.dart';
-import 'package:artifactproject/src/providers/NavigationProvider.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
 import 'package:artifactproject/src/widgets/shared/BluredImage.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' as g;
 

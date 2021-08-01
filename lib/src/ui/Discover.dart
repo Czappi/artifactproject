@@ -1,7 +1,6 @@
 import 'package:artifactproject/src/bloc/MangaList/HotMangaListBloc.dart';
 import 'package:artifactproject/src/bloc/MangaList/LatestMangaListBloc.dart';
 import 'package:artifactproject/src/bloc/MangaList/NewestMangaListBloc.dart';
-import 'package:artifactproject/src/models/MNMangaListPage.dart';
 import 'package:artifactproject/src/providers/NavigationProvider.dart';
 import 'package:artifactproject/src/widgets/MLGrid.dart';
 import 'package:artifactproject/src/widgets/MLList.dart';

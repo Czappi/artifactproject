@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:artifactproject/src/providers/SettingsProvider.dart';
 
 class SearchFilter extends StatelessWidget {
   final String label;

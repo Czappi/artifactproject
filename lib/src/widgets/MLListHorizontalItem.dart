@@ -1,11 +1,9 @@
 import 'package:artifactproject/src/models/MNMangaListPage.dart';
-import 'package:artifactproject/src/providers/NavigationProvider.dart';
 import 'package:artifactproject/src/utils/Enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:provider/provider.dart';
 
 class MLListHorizontalItem extends StatelessWidget {
   final MLElement mlElement;

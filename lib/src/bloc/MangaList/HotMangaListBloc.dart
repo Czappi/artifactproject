@@ -1,6 +1,5 @@
 import 'package:artifactproject/src/api/ManganatoAPI.dart';
 import 'package:artifactproject/src/models/MNMangaListPage.dart';
-import 'package:artifactproject/src/utils/Enums.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
