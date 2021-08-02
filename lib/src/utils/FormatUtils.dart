@@ -19,4 +19,13 @@ class FormatUtils {
 
   static int formatView(String view) =>
       int.tryParse(view.replaceAll(",", "")) ?? 0;
+
+  static String formatDesc(String desc) {
+    var _desc = desc;
+
+    // break line
+    _desc = _desc.replaceAll("<br>", "\n");
+
+    return _desc;
+  }
 }

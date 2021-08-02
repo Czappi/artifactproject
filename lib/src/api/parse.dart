@@ -205,7 +205,7 @@ mn_manga.Manga parseMangaPage(Map<String, String> map) {
     view: views,
     rating: rating,
     postId: postId,
-    description: description,
+    description: FormatUtils.formatDesc(description),
     chapters: chapters,
     followed: followed,
   );
