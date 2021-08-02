@@ -15,7 +15,7 @@ class LightTheme extends ArtifactTheme {
   @override
   final Color backgroundColor = Colors.white;
   @override
-  final Color cardColor = Colors.white70;
+  final Color cardColor = Colors.black.withOpacity(0.03);
   @override
   final Color buttonColor = const Color.fromARGB(255, 0, 170, 210);
   @override
@@ -62,7 +62,7 @@ class LightTheme extends ArtifactTheme {
   final TextStyle bodyTextStyle = GoogleFonts.roboto(
     color: Colors.black87,
     fontWeight: FontWeight.w400,
-    fontSize: 10.sp,
+    fontSize: 14.sp,
   );
 
   /// title in description
@@ -70,7 +70,7 @@ class LightTheme extends ArtifactTheme {
   final TextStyle bodyTitleTextStyle = GoogleFonts.roboto(
     color: Colors.black,
     fontWeight: FontWeight.bold,
-    fontSize: 14.sp,
+    fontSize: 20.sp,
   );
 
   /// subtitle in description
@@ -78,7 +78,7 @@ class LightTheme extends ArtifactTheme {
   final TextStyle bodySubtitleTextStyle = GoogleFonts.roboto(
     color: Colors.black45,
     fontWeight: FontWeight.w500,
-    fontSize: 12.sp,
+    fontSize: 13.sp,
   );
 
   /// System theme for statusbar

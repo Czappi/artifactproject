@@ -15,7 +15,7 @@ class DarkTheme extends ArtifactTheme {
   @override
   final Color backgroundColor = const Color.fromARGB(255, 23, 24, 28);
   @override
-  final Color cardColor = const Color.fromARGB(255, 31, 31, 31);
+  final Color cardColor = const Color.fromARGB(255, 29, 32, 39);
   @override
   final Color buttonColor = const Color.fromARGB(255, 0, 170, 210);
   @override
@@ -60,9 +60,9 @@ class DarkTheme extends ArtifactTheme {
   /// description
   @override
   final TextStyle bodyTextStyle = GoogleFonts.roboto(
-    color: Colors.white,
+    color: Colors.white70,
     fontWeight: FontWeight.w400,
-    fontSize: 10.sp,
+    fontSize: 14.sp,
   );
 
   /// title in description
@@ -70,15 +70,15 @@ class DarkTheme extends ArtifactTheme {
   final TextStyle bodyTitleTextStyle = GoogleFonts.roboto(
     color: Colors.white,
     fontWeight: FontWeight.bold,
-    fontSize: 14.sp,
+    fontSize: 20.sp,
   );
 
   /// subtitle in description
   @override
   final TextStyle bodySubtitleTextStyle = GoogleFonts.roboto(
-    color: Colors.white,
+    color: Colors.white.withOpacity(0.48),
     fontWeight: FontWeight.w500,
-    fontSize: 12.sp,
+    fontSize: 13.sp,
   );
 
   /// System theme for statusbar
