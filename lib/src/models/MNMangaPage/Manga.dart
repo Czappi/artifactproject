@@ -6,40 +6,41 @@ import 'package:artifactproject/src/utils/Enums.dart';
 import 'package:equatable/equatable.dart';
 
 class Manga extends Equatable {
-  final String title, href, img, alternativeTitle;
+  final String title, href, img;
+  final String? alternativeTitle;
   final Author author;
-  final MangaStatus status;
-  final List<Genre> genres;
-  final DateTime updated;
-  final int view;
+  final MangaStatus? status;
+  final List<Genre>? genres;
+  final DateTime? updated;
+  final int? view;
   final Rating rating;
-  final bool followed;
+  final bool? followed;
 
   // used for bookmark and rate
-  final String postId;
+  final String? postId;
 
-  final String description;
-  final List<Chapter> chapters;
+  final String? description;
+  final List<Chapter>? chapters;
 
   const Manga({
     required this.title,
     required this.href,
     required this.img,
-    required this.alternativeTitle,
+    this.alternativeTitle,
     required this.author,
-    required this.status,
-    required this.genres,
-    required this.updated,
-    required this.view,
+    this.status,
+    this.genres,
+    this.updated,
+    this.view,
     required this.rating,
-    required this.postId,
-    required this.description,
-    required this.chapters,
-    required this.followed,
+    this.postId,
+    this.description,
+    this.chapters,
+    this.followed,
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         title,
         href,
         img,
