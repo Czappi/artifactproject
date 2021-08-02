@@ -72,4 +72,6 @@ const Map<String, String> en_US = {
   "#homepage": "Home",
   "#discover": "Discover",
   "#favorites": "Favorites",
+  "#readnow": "read now",
+  "#read": "read",
 };
