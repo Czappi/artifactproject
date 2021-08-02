@@ -13,6 +13,7 @@ class Manga extends Equatable {
   final DateTime updated;
   final int view;
   final Rating rating;
+  final bool followed;
 
   // used for bookmark and rate
   final String postId;
@@ -34,6 +35,7 @@ class Manga extends Equatable {
     required this.postId,
     required this.description,
     required this.chapters,
+    required this.followed,
   });
 
   @override

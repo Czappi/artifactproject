@@ -178,6 +178,9 @@ mn_manga.Manga parseMangaPage(Map<String, String> map) {
       .text
       .replaceAll("Description :\n", "");
 
+  // followed
+  bool followed = document.querySelector("img.story-bookmark") == null;
+
   // chapters
   var chapterElements =
       document.querySelector("ul.row-content-chapter")!.children;
@@ -204,6 +207,7 @@ mn_manga.Manga parseMangaPage(Map<String, String> map) {
     postId: postId,
     description: description,
     chapters: chapters,
+    followed: followed,
   );
 }
 
