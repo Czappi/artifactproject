@@ -43,23 +43,43 @@ class LightTheme extends ArtifactTheme {
 
   /// title of manga in a MangaPage
   @override
-  final TextStyle titleTextStyle = const TextStyle();
+  final TextStyle titleTextStyle = GoogleFonts.roboto(
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+    fontSize: 20.sp,
+  );
 
   /// subtitle of manga in a MangaPage
   @override
-  final TextStyle subtitleTextStyle = const TextStyle();
+  final TextStyle subtitleTextStyle = GoogleFonts.roboto(
+    color: Colors.black45,
+    fontWeight: FontWeight.w500,
+    fontSize: 15.sp,
+  );
 
   /// description
   @override
-  final TextStyle bodyTextStyle = const TextStyle();
+  final TextStyle bodyTextStyle = GoogleFonts.roboto(
+    color: Colors.black87,
+    fontWeight: FontWeight.w400,
+    fontSize: 10.sp,
+  );
 
   /// title in description
   @override
-  final TextStyle bodyTitleTextStyle = const TextStyle();
+  final TextStyle bodyTitleTextStyle = GoogleFonts.roboto(
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+    fontSize: 14.sp,
+  );
 
   /// subtitle in description
   @override
-  final TextStyle bodySubtitleTextStyle = const TextStyle();
+  final TextStyle bodySubtitleTextStyle = GoogleFonts.roboto(
+    color: Colors.black45,
+    fontWeight: FontWeight.w500,
+    fontSize: 12.sp,
+  );
 
   /// System theme for statusbar
   @override
