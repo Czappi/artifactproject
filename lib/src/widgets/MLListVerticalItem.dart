@@ -12,14 +12,14 @@ class MLListVerticalItem extends StatelessWidget {
   final MLListItemDetailsType type;
   final double? width, height;
   final double aspectRatio;
-  const MLListVerticalItem(
-      {Key? key,
-      required this.mlElement,
-      this.width,
-      this.height,
-      this.aspectRatio = 225 / 348,
-      this.type = MLListItemDetailsType.none})
-      : super(key: key);
+  const MLListVerticalItem({
+    Key? key,
+    required this.mlElement,
+    this.width,
+    this.height,
+    this.aspectRatio = 225 / 348,
+    this.type = MLListItemDetailsType.none,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +29,13 @@ class MLListVerticalItem extends StatelessWidget {
       margin: EdgeInsets.all(10.sp),
       child: Column(
         children: [
-          InkWell(
-            onTap: () {
-              context.read<NavigationProvider>().navigateTo(mlElement.url);
-            },
-            child: _MLListVerticalItemImage(
-              img: NetworkImage(mlElement.imgUrl),
-              aspectRatio: aspectRatio,
-            ),
+          _MLListVerticalItemImage(
+            img: mlElement.imgUrl,
+            aspectRatio: aspectRatio,
+            url: mlElement.url,
+            title: mlElement.title,
+            author: mlElement.author,
+            rating: mlElement.ratingAverage,
           ),
           _MLListVerticalItemDetails(
             type: type,
@@ -127,12 +126,16 @@ class _MLListVerticalItemDetails extends StatelessWidget {
 }
 
 class _MLListVerticalItemImage extends StatelessWidget {
-  final ImageProvider img;
-  final double aspectRatio;
+  final double aspectRatio, rating;
+  final String url, title, author, img;
   const _MLListVerticalItemImage({
     Key? key,
     required this.img,
     required this.aspectRatio,
+    required this.url,
+    required this.title,
+    required this.author,
+    required this.rating,
   }) : super(key: key);
 
   @override
@@ -149,7 +152,7 @@ class _MLListVerticalItemImage extends StatelessWidget {
             children: [
               Positioned.fill(
                 child: Image(
-                  image: img,
+                  image: NetworkImage(img),
                   fit: BoxFit.fitHeight,
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) {
@@ -172,7 +175,13 @@ class _MLListVerticalItemImage extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
-                      //context.read<NavigationProvider>().navigateTo(mlElement.url);
+                      context.read<NavigationProvider>().navigateTo(
+                            url,
+                            title,
+                            author,
+                            img,
+                            rating,
+                          );
                     },
                   ),
                 ),
