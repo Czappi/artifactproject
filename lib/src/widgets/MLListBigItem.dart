@@ -1,9 +1,12 @@
 import 'package:artifactproject/src/models/MNMangaListPage.dart';
+import 'package:artifactproject/src/providers/NavigationProvider.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
 import 'package:artifactproject/src/widgets/shared/BluredImage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' as g;
+// ignore: implementation_imports
+import 'package:provider/src/provider.dart';
 
 class MLListBigItem extends StatelessWidget {
   final MLElement mlElement;
@@ -20,7 +23,13 @@ class MLListBigItem extends StatelessWidget {
     var image = NetworkImage(mlElement.imgUrl);
     return InkWell(
       onTap: () {
-        //context.read<NavigationProvider>().navigateTo(mlElement.url);
+        context.read<NavigationProvider>().navigateTo(
+              mlElement.url,
+              mlElement.title,
+              mlElement.author,
+              mlElement.imgUrl,
+              mlElement.ratingAverage,
+            );
       },
       child: Container(
         margin: EdgeInsets.all(10.sp),

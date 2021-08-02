@@ -1,9 +1,12 @@
 import 'package:artifactproject/src/models/MNMangaListPage.dart';
+import 'package:artifactproject/src/providers/NavigationProvider.dart';
 import 'package:artifactproject/src/utils/Enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+// ignore: implementation_imports
+import 'package:provider/src/provider.dart';
 
 class MLListHorizontalItem extends StatelessWidget {
   final MLElement mlElement;
@@ -29,8 +32,12 @@ class MLListHorizontalItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _MLListHorizontalItemImage(
-            img: NetworkImage(mlElement.imgUrl),
+            img: mlElement.imgUrl,
             aspectRatio: aspectRatio,
+            url: mlElement.url,
+            title: mlElement.title,
+            author: mlElement.author,
+            rating: mlElement.ratingAverage,
           ),
           _MLListHorizontalItemDetails(
             type: type,
@@ -121,12 +128,16 @@ class _MLListHorizontalItemDetails extends StatelessWidget {
 }
 
 class _MLListHorizontalItemImage extends StatelessWidget {
-  final ImageProvider img;
-  final double aspectRatio;
+  final double aspectRatio, rating;
+  final String url, title, author, img;
   const _MLListHorizontalItemImage({
     Key? key,
     required this.img,
     required this.aspectRatio,
+    required this.url,
+    required this.title,
+    required this.author,
+    required this.rating,
   }) : super(key: key);
 
   @override
@@ -143,7 +154,7 @@ class _MLListHorizontalItemImage extends StatelessWidget {
             children: [
               Positioned.fill(
                 child: Image(
-                  image: img,
+                  image: NetworkImage(img),
                   fit: BoxFit.fitWidth,
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) {
@@ -166,7 +177,13 @@ class _MLListHorizontalItemImage extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
-                      //context.read<NavigationProvider>().navigateTo(mlElement.url);
+                      context.read<NavigationProvider>().navigateTo(
+                            url,
+                            title,
+                            author,
+                            img,
+                            rating,
+                          );
                     },
                   ),
                 ),

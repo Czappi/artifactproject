@@ -15,8 +15,15 @@ class NavigationProvider with ChangeNotifier, DiagnosticableTreeMixin {
   NavPage currentNavPage = NavPage.home;
   DiscoverPage currentDiscoverPage = DiscoverPage.latest;
 
-  void navigateTo(String url) async {
-    BlocProvider.of<MangaPageBloc>(context).add(LoadMPEvent(url));
+  void navigateTo(
+    String url,
+    String title,
+    String author,
+    String imgUrl,
+    double rating,
+  ) async {
+    BlocProvider.of<MangaPageBloc>(context)
+        .add(LoadMPEvent(url, title, author, imgUrl, rating));
     await panelController.open();
   }
 

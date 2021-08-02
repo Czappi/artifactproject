@@ -75,6 +75,8 @@ class _MainviewState extends State<Mainview> {
         controller: context.read<NavigationProvider>().panelController,
         minHeight: 0,
         maxHeight: MediaQuery.of(context).size.height,
+        padding: const EdgeInsets.all(0),
+        color: Colors.transparent,
         body: const MainviewBody(),
       ),
     );

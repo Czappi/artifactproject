@@ -31,14 +31,19 @@ class Providers extends StatelessWidget {
         ChangeNotifierProvider(
             create: (context) => NavigationProvider(context)),
       ],
-      child: MultiBlocProvider(
+      builder: (context, _) => MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => HotMangaListBloc(context)),
           BlocProvider(create: (context) => NewestMangaListBloc(context)),
           BlocProvider(create: (context) => LatestMangaListBloc(context)),
           BlocProvider(create: (context) => MangaPageBloc(context)),
         ],
-        child: child,
+        child: ChangeNotifierProvider(
+          create: (context) => NavigationProvider(context),
+          child: Builder(
+            builder: (context) => child,
+          ),
+        ),
       ),
     );
   }
