@@ -24,6 +24,7 @@ class NavigationProvider with ChangeNotifier, DiagnosticableTreeMixin {
   ) async {
     BlocProvider.of<MangaPageBloc>(context)
         .add(LoadMPEvent(url, title, author, imgUrl, rating));
+    await panelController.show();
     await panelController.open();
   }
 

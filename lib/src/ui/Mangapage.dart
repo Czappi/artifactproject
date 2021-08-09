@@ -1,9 +1,11 @@
 import 'package:artifactproject/src/bloc/MangaPage/MangaPage.dart';
+import 'package:artifactproject/src/providers/NavigationProvider.dart';
 import 'package:artifactproject/src/widgets/MangapageAppbar.dart';
 import 'package:artifactproject/src/widgets/MangapageBodyDescriptionCard.dart';
 import 'package:artifactproject/src/widgets/MangapageBodyHeader.dart';
 import 'package:artifactproject/src/widgets/MangapageBodyInformationCard.dart';
 import 'package:artifactproject/src/widgets/MangapageBottomBar.dart';
+import 'package:artifactproject/src/widgets/MangapageChaptersCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
@@ -17,24 +19,31 @@ class Mangapage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: context.atheme.systemUiOverlayStyle,
-      child: Container(
-        color: context.atheme.backgroundColor,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: ListView(
-                controller: scrollController,
-                children: const [
-                  MangapageAppbar(),
-                  _Body(),
-                ],
+      child: WillPopScope(
+        onWillPop: () async {
+          await context.read<NavigationProvider>().panelController.close();
+          await context.read<NavigationProvider>().panelController.hide();
+          return false;
+        },
+        child: Container(
+          color: context.atheme.backgroundColor,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: ListView(
+                  controller: scrollController,
+                  children: const [
+                    MangapageAppbar(),
+                    _Body(),
+                  ],
+                ),
               ),
-            ),
-            MangapageBottomBar(
-              onTap: () {},
-            ),
-          ],
+              MangapageBottomBar(
+                onTap: () {},
+              ),
+            ],
+          ),
         ),
       ),
     );
