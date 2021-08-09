@@ -114,6 +114,9 @@ class _MainBody extends StatelessWidget {
             view: state.manga.view,
             updated: state.manga.updated,
           ),
+          MangapageChaptersCard(
+            chapters: state.manga.chapters ?? [],
+          ),
         ],
       );
     }
