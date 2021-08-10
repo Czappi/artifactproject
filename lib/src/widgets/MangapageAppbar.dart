@@ -1,8 +1,10 @@
+import 'package:artifactproject/src/providers/NavigationProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
-import 'package:get/get.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+// ignore: implementation_imports
+import 'package:provider/src/provider.dart';
 
 class MangapageAppbar extends StatelessWidget {
   final GestureTapCallback? settingsOnTap;
@@ -19,8 +21,12 @@ class MangapageAppbar extends StatelessWidget {
         child: Row(
           children: [
             IconButton(
-              onPressed: () {
-                Get.back();
+              onPressed: () async {
+                await context
+                    .read<NavigationProvider>()
+                    .panelController
+                    .close();
+                await context.read<NavigationProvider>().panelController.hide();
               },
               icon: Icon(
                 PhosphorIcons.caretLeftBold,
