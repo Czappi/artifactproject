@@ -1,4 +1,5 @@
 import 'package:artifactproject/src/api/ManganatoAPI.dart';
+import 'package:artifactproject/src/bloc/ChapterPage/ChapterPage.dart';
 import 'package:artifactproject/src/bloc/MangaList/HotMangaListBloc.dart';
 import 'package:artifactproject/src/bloc/MangaList/LatestMangaListBloc.dart';
 import 'package:artifactproject/src/bloc/MangaList/NewestMangaListBloc.dart';
@@ -8,6 +9,7 @@ import 'package:artifactproject/src/providers/SettingsProvider.dart';
 import 'package:artifactproject/src/translations/Translation.dart';
 import 'package:artifactproject/src/ui/Mainview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -37,6 +39,7 @@ class Providers extends StatelessWidget {
           BlocProvider(create: (context) => NewestMangaListBloc(context)),
           BlocProvider(create: (context) => LatestMangaListBloc(context)),
           BlocProvider(create: (context) => MangaPageBloc(context)),
+          BlocProvider(create: (context) => ChapterPageBloc(context)),
         ],
         child: ChangeNotifierProvider(
           create: (context) => NavigationProvider(context),

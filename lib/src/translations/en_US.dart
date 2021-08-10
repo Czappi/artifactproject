@@ -94,4 +94,6 @@ const Map<String, String> en_US = {
   "#datetime-minutes-ago": "minutes",
   "#datetime-second-ago": "a second",
   "#datetime-seconds-ago": "seconds",
+  "#prevchapter": "prev chapter",
+  "#nextchapter": "next chapter",
 };

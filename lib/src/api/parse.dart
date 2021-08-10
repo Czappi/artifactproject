@@ -12,19 +12,20 @@ mn_chapter.Chapter parseChapterPage(Map<String, String> map) {
   var document = parse(map["responseBody"]);
 
   // imageUrls
-  var imageContainer = document.querySelector("div.container-chapter-reader")!;
-  var imageElements = imageContainer.children;
-  var imageUrls = imageElements.map((e) => e.attributes["src"]!).toList();
+  var imageElements =
+      document.querySelectorAll("div.container-chapter-reader > img");
+  var imageUrls = imageElements.map((e) => e.attributes["src"] ?? "").toList();
 
   // imageServers
   var currentImageServerElement =
-      document.querySelector("a.server-image-btn.isactive")!;
+      document.querySelector("a.server-image-btn.isactive");
   var otherImageServerElement =
-      document.querySelector("a.server-image-btn.a-h")!;
+      document.querySelector("a.server-image-btn.a-h");
   var currentImageServer =
-      mn_chapter.ImageServer(currentImageServerElement.text);
-  var otherImageServer = mn_chapter.ImageServer(otherImageServerElement.text,
-      url: otherImageServerElement.attributes["data-l"]);
+      mn_chapter.ImageServer(currentImageServerElement?.text ?? "");
+  var otherImageServer = mn_chapter.ImageServer(
+      otherImageServerElement?.text ?? "",
+      url: otherImageServerElement?.attributes["data-l"]);
 
   // chapterList
   // indexes
@@ -52,12 +53,12 @@ mn_chapter.Chapter parseChapterPage(Map<String, String> map) {
       .replaceAll(" Summary", "");
 
   // next/prev href
-  var nextHref = document
-      .querySelector("a.navi-change-chapter-btn-next.a-h")!
-      .attributes["href"]!;
-  var prevHref = document
-      .querySelector("a.navi-change-chapter-btn-prev.a-h")!
-      .attributes["href"]!;
+  var nextHrefElement =
+      document.querySelector("a.navi-change-chapter-btn-next.a-h");
+  var nextHref = nextHrefElement?.attributes["href"];
+  var prevHrefElement =
+      document.querySelector("a.navi-change-chapter-btn-prev.a-h");
+  var prevHref = prevHrefElement?.attributes["href"];
 
   return mn_chapter.Chapter(
       title: title,

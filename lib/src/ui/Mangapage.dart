@@ -1,5 +1,7 @@
+import 'package:artifactproject/src/bloc/ChapterPage/ChapterPage.dart';
 import 'package:artifactproject/src/bloc/MangaPage/MangaPage.dart';
 import 'package:artifactproject/src/providers/NavigationProvider.dart';
+import 'package:artifactproject/src/ui/Chapterpage.dart';
 import 'package:artifactproject/src/widgets/MangapageAppbar.dart';
 import 'package:artifactproject/src/widgets/MangapageBodyDescriptionCard.dart';
 import 'package:artifactproject/src/widgets/MangapageBodyHeader.dart';
@@ -10,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 
 class Mangapage extends StatelessWidget {
   final ScrollController scrollController;
@@ -40,7 +43,16 @@ class Mangapage extends StatelessWidget {
                 ),
               ),
               MangapageBottomBar(
-                onTap: () {},
+                onTap: () {
+                  var mpbState = context.read<MangaPageBloc>().state;
+                  if (mpbState.manga.chapters?.isNotEmpty ?? false) {
+                    context.read<ChapterPageBloc>().add(LoadCHPEvent(
+                        mpbState.manga.chapters!.first.href,
+                        mpbState.manga.chapters!.first.title));
+                  }
+
+                  Get.to(() => Chapterpage());
+                },
               ),
             ],
           ),

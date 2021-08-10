@@ -1,8 +1,13 @@
+import 'package:artifactproject/src/bloc/ChapterPage/ChapterPage.dart';
+import 'package:artifactproject/src/bloc/MangaPage/MangaPage.dart';
+import 'package:artifactproject/src/ui/Chapterpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:get/get.dart';
+// ignore: implementation_imports
+import 'package:provider/src/provider.dart';
 
 class MangapageBodyHeader extends StatelessWidget {
   final String title, author, imgUrl;
@@ -54,7 +59,16 @@ class MangapageBodyHeader extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     child: _ButtonRow(
                       followed: followed,
-                      readOnTap: () {},
+                      readOnTap: () {
+                        var mpbState = context.read<MangaPageBloc>().state;
+                        if (mpbState.manga.chapters?.isNotEmpty ?? false) {
+                          context.read<ChapterPageBloc>().add(LoadCHPEvent(
+                            mpbState.manga.chapters!.first.href,
+                            mpbState.manga.chapters!.first.title));
+                        }
+                        
+                        Get.to(() => Chapterpage());
+                      },
                       bookmarkOnTap: () {},
                       shareOnTap: () {},
                     ),
