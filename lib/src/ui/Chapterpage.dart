@@ -1,6 +1,7 @@
 import 'package:artifactproject/src/bloc/ChapterPage/ChapterPage.dart';
 import 'package:artifactproject/src/providers/SettingsProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -14,9 +15,10 @@ class Chapterpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: context.atheme.backgroundColor,
-        child: SafeArea(
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: context.atheme.systemUiOverlayStyle,
+        child: Container(
+          color: context.atheme.backgroundColor,
           child: BlocBuilder<ChapterPageBloc, ChapterPageState>(
             builder: (context, state) {
               return CustomScrollView(
@@ -24,30 +26,32 @@ class Chapterpage extends StatelessWidget {
                 cacheExtent: double.maxFinite,
                 slivers: [
                   SliverToBoxAdapter(
-                    child: Container(
-                      color: context.atheme.backgroundColor,
-                      height: 60.h,
-                      alignment: Alignment.center,
-                      child: Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              Get.back();
-                            },
-                            icon: Icon(
-                              PhosphorIcons.caretLeftBold,
-                              size: 26.sp,
-                              color: context.atheme.iconColor,
+                    child: SafeArea(
+                      child: Container(
+                        color: context.atheme.backgroundColor,
+                        height: 60.h,
+                        alignment: Alignment.center,
+                        child: Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              icon: Icon(
+                                PhosphorIcons.caretLeftBold,
+                                size: 26.sp,
+                                color: context.atheme.iconColor,
+                              ),
                             ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              state.chapter.title,
-                              style: context.atheme.bodyTitleTextStyle,
-                              overflow: TextOverflow.ellipsis,
+                            Expanded(
+                              child: Text(
+                                state.chapter.title,
+                                style: context.atheme.bodyTitleTextStyle,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
